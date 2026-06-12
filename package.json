@@ -1,0 +1,28 @@
+{
+  "name": "talentlens-ai",
+  "version": "1.0.0",
+  "description": "Skill gap and Questions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Priyanshu082004/talentlens-ai.git"
+  },
+  "keywords": [
+    "GAP"
+  ],
+  "author": "Priyanshu Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Priyanshu082004/talentlens-ai/issues"
+  },
+  "homepage": "https://github.com/Priyanshu082004/talentlens-ai#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.0",
+    "nodemon": "^3.1.14"
+  }
+}
