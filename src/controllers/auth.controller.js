@@ -4,9 +4,22 @@ import jwt from "jsonwebtoken";
 
 
 
-// const generateAccessAndRefreshTokens = async (user) => {
-//     try{}
-// }
+const generateAccessAndRefreshTokens =  async (userId) => {
+  try{
+    const user = await User.findById(userId);
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+    return { accessToken, refreshToken };
+  }
+  catch(error){
+    console.error("Error generating tokens:", error);
+    throw new Error("Token generation failed");
+  }  
+}   
+//  make utils for apiresponse and use that in all the controllers to send response in a consistent format with status code, message and data (if any)
 
 const registerUser = async (req, res) => {
   try {
@@ -27,13 +40,18 @@ const registerUser = async (req, res) => {
     
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({
+    const newUser = await User.create({
       username,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     });
+   
 
-
+  //  const token =  jwt.sign({ id: newUser._id , username: newUser.username}, 
+  //   process.env.JWT_SECRET, {
+  //       expiresIn: process.env.JWT_EXPIRES_IN,
+  //     });    instead of this use a helepr method  to generate tokens and send both access and refresh tokens in response
+ 
    
   } catch (error) {
     console.error("Error registering user:", error);
