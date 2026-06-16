@@ -1,6 +1,8 @@
 import {User} from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import ApiResponse from "../utils/ApiResponse.js";
+import ApiError from "../utils/ApiError.js";
 
 
 
@@ -26,7 +28,7 @@ const registerUser = async (req, res) => {
     const { username, email, password } = req.body; 
 
     if (!username || !email || !password) {
-      return res.status(400).json({ message: "Please provide all the required fields" });
+      throw new ApiError(400, "Please provide all the required fields");
     }
 
     const existingUser = await User.findOne({
@@ -34,8 +36,7 @@ const registerUser = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400)
-      .json({ message: "User with this username or email already exists" });
+      throw new ApiError(409, "User with this username or email already exists");
     }
     
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -55,7 +56,7 @@ const registerUser = async (req, res) => {
    
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ message: "Internal server error" });
+    throw new ApiError(500, "Internal server error");
   }
 }
 
