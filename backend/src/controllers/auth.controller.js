@@ -60,3 +60,33 @@ const registerUser = async (req, res) => {
   }
 }
 
+
+const loginUser = async (req, res) => {
+  try {
+    const { email, password , username} = req.body;
+    if (!email && !password) {
+      throw new ApiError(400, "Please provide both email and password");
+    } 
+    const user = await User.findOne({ 
+      $or: [{ email }, { username }]
+    });
+    if (!user) {
+      throw new ApiError(404, "Invalid email or username");
+    }
+    const isPasswordValid = await User.isPaaswordCorrect(password);
+    if (!isPasswordValid) {
+      throw new ApiError(401, "Invalid password");
+    }
+    const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
+
+    const loggedInUser =  await User.findById(user._id).select("-password -refreshToken");
+    res
+    .status(200)
+    .json(new ApiResponse(200, 
+      "Login successful",
+       { user: loggedInUser, accessToken, refreshToken }));
+  }
+  catch (error) {
+    console.error("Error logging in user:", error); }
+  }
+
