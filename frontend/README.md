@@ -1031,3 +1031,734 @@ VITE_APP_VERSION=1.0.0
 ---
 
 *Architecture version 1.0 — Ready for implementation. Start with: Design tokens → Component library → Auth pages → Landing → Dashboard.*
+
+---
+
+## 14. Config Files (Complete & Ready to Use)
+
+### vite.config.js
+```js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@':          path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@pages':     path.resolve(__dirname, './src/pages'),
+      '@redux':     path.resolve(__dirname, './src/redux'),
+      '@hooks':     path.resolve(__dirname, './src/hooks'),
+      '@services':  path.resolve(__dirname, './src/services'),
+      '@utils':     path.resolve(__dirname, './src/utils'),
+      '@animations':path.resolve(__dirname, './src/animations'),
+      '@constants': path.resolve(__dirname, './src/constants'),
+      '@assets':    path.resolve(__dirname, './src/assets'),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react':  ['react', 'react-dom', 'react-router-dom'],
+          'vendor-redux':  ['@reduxjs/toolkit', 'react-redux'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-gsap':   ['gsap'],
+          'vendor-axios':  ['axios'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+  },
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    },
+  },
+});
+```
+
+### tailwind.config.js
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Syne', 'sans-serif'],
+        body:    ['Inter', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'monospace'],
+      },
+      colors: {
+        primary: {
+          400: '#818CF8',
+          500: '#6366F1',
+          600: '#4F46E5',
+          700: '#4338CA',
+        },
+        secondary: {
+          500: '#7C3AED',
+          600: '#6D28D9',
+        },
+        accent: {
+          400: '#22D3EE',
+          500: '#06B6D4',
+        },
+        bg: {
+          base:    '#050816',
+          surface: '#0F172A',
+          elevated:'#111827',
+        },
+      },
+      backgroundImage: {
+        'gradient-hero':   'linear-gradient(135deg, #6366F1 0%, #7C3AED 50%, #06B6D4 100%)',
+        'gradient-card':   'linear-gradient(145deg, rgba(99,102,241,0.08), rgba(124,58,237,0.04))',
+        'gradient-shimmer':'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%)',
+      },
+      backdropBlur: {
+        glass: '16px',
+      },
+      boxShadow: {
+        glow:   '0 0 40px rgba(99,102,241,0.2)',
+        'glow-lg': '0 0 80px rgba(99,102,241,0.3)',
+        glass:  '0 8px 32px rgba(0,0,0,0.4)',
+      },
+      animation: {
+        'marquee':     'marquee 30s linear infinite',
+        'float':       'float 4s ease-in-out infinite',
+        'pulse-glow':  'pulse-glow 2.5s ease-in-out infinite',
+        'shimmer':     'shimmer 2s linear infinite',
+        'spin-slow':   'spin-slow 8s linear infinite',
+        'fade-up':     'fadeUp 0.5s ease-out forwards',
+      },
+      keyframes: {
+        marquee:    { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+        float:      { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+        'pulse-glow':{ '0%, 100%': { boxShadow: '0 0 20px rgba(99,102,241,0.2)' }, '50%': { boxShadow: '0 0 50px rgba(99,102,241,0.45)' } },
+        shimmer:    { from: { backgroundPosition: '-200% center' }, to: { backgroundPosition: '200% center' } },
+        'spin-slow':{ from: { transform: 'rotate(0deg)' },          to:   { transform: 'rotate(360deg)' } },
+        fadeUp:     { from: { opacity: '0', transform: 'translateY(20px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+      },
+      screens: {
+        xs: '375px',
+      },
+    },
+  },
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        resumeai: {
+          primary:   '#6366F1',
+          secondary: '#7C3AED',
+          accent:    '#06B6D4',
+          neutral:   '#0F172A',
+          'base-100':'#050816',
+          'base-200':'#0F172A',
+          'base-300':'#111827',
+          info:      '#06B6D4',
+          success:   '#10B981',
+          warning:   '#F59E0B',
+          error:     '#EF4444',
+        },
+      },
+    ],
+    darkTheme: 'resumeai',
+    base: true,
+    styled: true,
+    utils: true,
+    logs: false,
+  },
+};
+```
+
+### src/styles/globals.css
+```css
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import './tokens.css';
+@import './animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    line-height: var(--leading-normal);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar       { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.6); }
+
+  /* Selection */
+  ::selection {
+    background: rgba(99,102,241,0.3);
+    color: var(--text-primary);
+  }
+
+  /* Focus ring */
+  :focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Glass card utility */
+  .glass {
+    background:     var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Gradient text utility */
+  .text-gradient {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Orb glow utility */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  /* Shimmer skeleton */
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--bg-surface) 0%,
+      rgba(99,102,241,0.06) 50%,
+      var(--bg-surface) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease-in-out infinite;
+  }
+}
+```
+
+### src/main.jsx
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { LazyMotion, domAnimation } from 'framer-motion';
+import { Toaster } from 'react-hot-toast';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import { store } from '@redux/store';
+import AppRoutes from '@/routes';
+
+import './styles/globals.css';
+
+// Register GSAP plugins once globally
+gsap.registerPlugin(ScrollTrigger);
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <LazyMotion features={domAnimation}>
+          <AppRoutes />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: '#0F172A',
+                color: '#F8FAFC',
+                border: '1px solid rgba(99,102,241,0.2)',
+                borderRadius: '12px',
+                fontFamily: 'Inter, sans-serif',
+              },
+            }}
+          />
+        </LazyMotion>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
+);
+```
+
+---
+
+## 15. Constants
+
+### src/constants/routes.js
+```js
+export const ROUTES = {
+  HOME:       '/',
+  LOGIN:      '/login',
+  SIGNUP:     '/signup',
+  DASHBOARD:  '/dashboard',
+  ANALYSIS:   '/dashboard/analysis',
+  HISTORY:    '/dashboard/history',
+  PROFILE:    '/dashboard/profile',
+  SETTINGS:   '/dashboard/settings',
+};
+```
+
+### src/constants/api.js
+```js
+export const API = {
+  AUTH: {
+    LOGIN:    '/auth/login',
+    REGISTER: '/auth/register',
+    ME:       '/auth/me',
+    LOGOUT:   '/auth/logout',
+  },
+  RESUME: {
+    ANALYZE: '/resume/analyze',
+    HISTORY: '/resume/history',
+    DELETE:  (id) => `/resume/${id}`,
+  },
+};
+```
+
+### src/constants/copy.js
+```js
+// All UI strings in one place — easy to swap for i18n later
+export const COPY = {
+  HERO: {
+    EYEBROW:   'Powered by Google Gemini Flash 2.5',
+    HEADLINE:  'Your resume gets 7 seconds.\nMake them count.',
+    SUB:       'ResumeAI analyzes, scores, and rewrites your resume the way a senior recruiter would — in 30 seconds.',
+    CTA_PRIMARY:  'Analyze My Resume',
+    CTA_SECONDARY:'See How It Works',
+  },
+  UPLOAD: {
+    IDLE:     'Drop your PDF resume here, or click to browse',
+    DRAGGING: 'Release to upload',
+    SUCCESS:  'Resume uploaded — analyzing now',
+    ERROR:    'Only PDF files under 5MB are accepted',
+  },
+  ATS: {
+    LABEL:   'ATS Score',
+    TOOLTIP: 'How likely an Applicant Tracking System is to surface your resume',
+  },
+};
+```
+
+---
+
+## 16. Hooks
+
+### src/hooks/useAuth.js
+```js
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginUser, registerUser, logoutUser } from '@redux/slices/authSlice';
+import { ROUTES } from '@constants/routes';
+
+export const useAuth = () => {
+  const dispatch  = useDispatch();
+  const navigate  = useNavigate();
+  const { user, isLoading, error, isAuthenticated } = useSelector((s) => s.auth);
+
+  const login = async (credentials) => {
+    const result = await dispatch(loginUser(credentials));
+    if (!result.error) navigate(ROUTES.DASHBOARD);
+  };
+
+  const signup = async (userData) => {
+    const result = await dispatch(registerUser(userData));
+    if (!result.error) navigate(ROUTES.DASHBOARD);
+  };
+
+  const logout = () => {
+    dispatch(logoutUser());
+    navigate(ROUTES.LOGIN);
+  };
+
+  return { user, isLoading, error, isAuthenticated, login, signup, logout };
+};
+```
+
+### src/hooks/useScrollProgress.js
+```js
+import { useState, useEffect } from 'react';
+
+export const useScrollProgress = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollTop  = window.scrollY;
+      const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return progress;
+};
+```
+
+### src/hooks/useFileUpload.js
+```js
+import { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { uploadAndAnalyze } from '@redux/slices/resumeSlice';
+
+const ACCEPTED_TYPE = 'application/pdf';
+const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
+
+export const useFileUpload = () => {
+  const dispatch = useDispatch();
+  const [dragActive, setDragActive] = useState(false);
+  const [fileError, setFileError]   = useState(null);
+
+  const validate = (file) => {
+    if (file.type !== ACCEPTED_TYPE) return 'Only PDF files are accepted.';
+    if (file.size > MAX_SIZE_BYTES)  return 'File must be under 5MB.';
+    return null;
+  };
+
+  const handleFile = useCallback((file) => {
+    const err = validate(file);
+    if (err) { setFileError(err); return; }
+    setFileError(null);
+    dispatch(uploadAndAnalyze(file));
+  }, [dispatch]);
+
+  const onDrop = useCallback((e) => {
+    e.preventDefault();
+    setDragActive(false);
+    const file = e.dataTransfer?.files?.[0];
+    if (file) handleFile(file);
+  }, [handleFile]);
+
+  const onDragOver  = (e) => { e.preventDefault(); setDragActive(true);  };
+  const onDragLeave = ()  => setDragActive(false);
+  const onInputChange = (e) => { const f = e.target.files?.[0]; if (f) handleFile(f); };
+
+  return { dragActive, fileError, onDrop, onDragOver, onDragLeave, onInputChange };
+};
+```
+
+### src/hooks/useGSAP.js
+```js
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+/**
+ * Runs a GSAP context scoped to a ref, cleaned up on unmount.
+ * Usage: const ref = useGSAP((ctx) => { ctx.add(() => gsap.from(...)) });
+ */
+export const useGSAP = (callback, deps = []) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(callback, ref);
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return ref;
+};
+```
+
+---
+
+## 17. Redux Slices (Complete)
+
+### src/redux/slices/authSlice.js
+```js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import authService from '@services/authService';
+
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (credentials, { rejectWithValue }) => {
+    try   { return await authService.login(credentials); }
+    catch (err) { return rejectWithValue(err.response?.data?.message || 'Login failed'); }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (userData, { rejectWithValue }) => {
+    try   { return await authService.register(userData); }
+    catch (err) { return rejectWithValue(err.response?.data?.message || 'Registration failed'); }
+  }
+);
+
+export const fetchCurrentUser = createAsyncThunk(
+  'auth/me',
+  async (_, { rejectWithValue }) => {
+    try   { return await authService.me(); }
+    catch (err) { return rejectWithValue(err.response?.data?.message); }
+  }
+);
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
+    user: null,
+    token: localStorage.getItem('token') || null,
+    isLoading: false,
+    error: null,
+    isAuthenticated: !!localStorage.getItem('token'),
+  },
+  reducers: {
+    logoutUser: (state) => {
+      state.user            = null;
+      state.token           = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem('token');
+    },
+    clearError: (state) => { state.error = null; },
+  },
+  extraReducers: (builder) => {
+    const handlePending = (state)        => { state.isLoading = true; state.error = null; };
+    const handleFulfilled = (state, { payload }) => {
+      state.isLoading       = false;
+      state.user            = payload.user;
+      state.token           = payload.token;
+      state.isAuthenticated = true;
+      localStorage.setItem('token', payload.token);
+    };
+    const handleRejected = (state, { payload }) => {
+      state.isLoading = false;
+      state.error     = payload;
+    };
+
+    builder
+      .addCase(loginUser.pending,         handlePending)
+      .addCase(loginUser.fulfilled,       handleFulfilled)
+      .addCase(loginUser.rejected,        handleRejected)
+      .addCase(registerUser.pending,      handlePending)
+      .addCase(registerUser.fulfilled,    handleFulfilled)
+      .addCase(registerUser.rejected,     handleRejected)
+      .addCase(fetchCurrentUser.pending,  handlePending)
+      .addCase(fetchCurrentUser.fulfilled,(state, { payload }) => {
+        state.isLoading       = false;
+        state.user            = payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchCurrentUser.rejected, (state) => {
+        state.isLoading = false;
+        state.token     = null;
+        state.isAuthenticated = false;
+        localStorage.removeItem('token');
+      });
+  },
+});
+
+export const { logoutUser, clearError } = authSlice.actions;
+export default authSlice.reducer;
+```
+
+### src/redux/slices/resumeSlice.js
+```js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import resumeService from '@services/resumeService';
+
+export const uploadAndAnalyze = createAsyncThunk(
+  'resume/analyze',
+  async (file, { dispatch, rejectWithValue }) => {
+    try {
+      const data = await resumeService.analyzeResume(file, (pct) => {
+        dispatch(setUploadProgress(pct));
+      });
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || 'Analysis failed');
+    }
+  }
+);
+
+export const fetchHistory = createAsyncThunk(
+  'resume/history',
+  async (_, { rejectWithValue }) => {
+    try   { return await resumeService.getHistory(); }
+    catch (err) { return rejectWithValue(err.response?.data?.message); }
+  }
+);
+
+export const deleteAnalysis = createAsyncThunk(
+  'resume/delete',
+  async (id, { rejectWithValue }) => {
+    try   { await resumeService.deleteEntry(id); return id; }
+    catch (err) { return rejectWithValue(err.response?.data?.message); }
+  }
+);
+
+const resumeSlice = createSlice({
+  name: 'resume',
+  initialState: {
+    uploadedFile:     null,
+    uploadProgress:   0,
+    isAnalyzing:      false,
+    analysisResult:   null,
+    history:          [],
+    isLoadingHistory: false,
+    error:            null,
+  },
+  reducers: {
+    setUploadProgress: (state, { payload }) => { state.uploadProgress = payload; },
+    clearAnalysis:     (state) => { state.analysisResult = null; state.uploadProgress = 0; },
+    clearError:        (state) => { state.error = null; },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Analyze
+      .addCase(uploadAndAnalyze.pending,   (state) => { state.isAnalyzing = true; state.error = null; state.uploadProgress = 0; })
+      .addCase(uploadAndAnalyze.fulfilled, (state, { payload }) => { state.isAnalyzing = false; state.uploadProgress = 100; state.analysisResult = payload; })
+      .addCase(uploadAndAnalyze.rejected,  (state, { payload }) => { state.isAnalyzing = false; state.error = payload; })
+      // History
+      .addCase(fetchHistory.pending,   (state) => { state.isLoadingHistory = true; })
+      .addCase(fetchHistory.fulfilled, (state, { payload }) => { state.isLoadingHistory = false; state.history = payload; })
+      .addCase(fetchHistory.rejected,  (state) => { state.isLoadingHistory = false; })
+      // Delete
+      .addCase(deleteAnalysis.fulfilled, (state, { payload: id }) => {
+        state.history = state.history.filter((h) => h.id !== id);
+      });
+  },
+});
+
+export const { setUploadProgress, clearAnalysis, clearError } = resumeSlice.actions;
+export default resumeSlice.reducer;
+```
+
+### src/redux/slices/uiSlice.js
+```js
+import { createSlice } from '@reduxjs/toolkit';
+
+const uiSlice = createSlice({
+  name: 'ui',
+  initialState: {
+    sidebarCollapsed: false,
+    activeSection:    'dashboard',
+    scrollProgress:   0,
+    toasts:           [],
+  },
+  reducers: {
+    toggleSidebar:    (state) => { state.sidebarCollapsed = !state.sidebarCollapsed; },
+    setActiveSection: (state, { payload }) => { state.activeSection = payload; },
+    setScrollProgress:(state, { payload }) => { state.scrollProgress = payload; },
+  },
+});
+
+export const { toggleSidebar, setActiveSection, setScrollProgress } = uiSlice.actions;
+export default uiSlice.reducer;
+```
+
+---
+
+## 18. Implementation Kickstart Order
+
+Follow this sequence — each step builds on the previous one cleanly.
+
+```
+Phase 1 — Foundation (Day 1)
+  1. Scaffold project:  npm create vite@latest . -- --template react
+  2. Install all deps from Section 13
+  3. Copy tailwind.config.js, vite.config.js, globals.css, tokens.css, animations.css
+  4. Set up src/main.jsx with Provider + BrowserRouter + LazyMotion + Toaster
+  5. Set up Redux store + all 3 slices
+  6. Set up Axios instance + authService + resumeService
+
+Phase 2 — Routing + Layouts (Day 1–2)
+  7. routes/index.jsx with all lazy routes
+  8. PublicLayout.jsx (Navbar + Outlet + Footer)
+  9. DashboardLayout.jsx (Sidebar + Topbar + Outlet)
+  10. ProtectedRoutes.jsx (reads isAuthenticated from Redux)
+
+Phase 3 — UI Component Library (Day 2–3)
+  11. Button (all variants + loading state)
+  12. Input (focus glow + error state)
+  13. GlassCard
+  14. OrbGlow
+  15. CircularProgress (SVG, GSAP count-up)
+  16. ProgressBar
+  17. Badge
+  18. Spinner + LoadingScreen
+
+Phase 4 — Auth Pages (Day 3)
+  19. Login page (glass card, Framer entrance, form, validation)
+  20. Signup page (same, + password strength bar)
+  21. Wire up useAuth hook → loginUser / registerUser thunks
+  22. Test auth flow end-to-end with existing backend
+
+Phase 5 — Dashboard Core (Day 4–5)
+  23. UploadZone (drag-drop states, useFileUpload hook)
+  24. AnalysisTimeline (step indicator, animated connectors)
+  25. ATSScoreCard (CircularProgress, GSAP count-up on mount)
+  26. StrengthsPanel + WeaknessesPanel (stagger card reveal)
+  27. SkillGapChart (progress bars, matched vs missing tags)
+  28. SuggestionsAccordion
+  29. KeywordCloud (tag grid, color-coded by match status)
+  30. InterviewQA (expandable Q&A cards)
+  31. AnalysisHistory (search + filter + delete)
+
+Phase 6 — Landing Page (Day 5–7)
+  32. Hero (GSAP heroTimeline, mockup float animation)
+  33. TrustedBy (CSS marquee)
+  34. Features (ScrollTrigger stagger reveal)
+  35. HowItWorks (animated connector line between steps)
+  36. AIShowcase (pinned scroll section)
+  37. Testimonials (auto-scroll)
+  38. FAQ (accordion)
+  39. CTASection + Footer
+
+Phase 7 — Polish (Day 7–8)
+  40. Scroll progress bar (top of landing)
+  41. Framer page transitions (AnimatePresence in router)
+  42. Responsive pass (xs → xl all pages)
+  43. Reduced-motion audit
+  44. Lighthouse performance audit + fix
+  45. Error boundaries per route
+  46. 404 page
+```
+
+---
+
+*Architecture version 1.1 — Complete. All 18 sections cover: design system, folder structure, routes, Redux, page strategy, component hierarchy, animations, services, responsive design, reusable components, performance, config files, constants, hooks, full Redux slices, and phased implementation order.*
