@@ -1,0 +1,24 @@
+.shimmerOverlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmerOverlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerSweep {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
