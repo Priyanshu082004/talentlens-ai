@@ -2,11 +2,30 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { modalBackdrop, modalPanel } from '@animations/framerVariants';
+import { useEffect } from 'react';
+
+
 
 export default function Modal({ open, onClose, title, children, footer, size = 'md' }) {
   const sizes = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg', xl: 'max-w-2xl' };
 
-  if (typeof document === 'undefined') return null;
+  
+
+
+    useEffect(() => {
+        
+                if (open) {
+    document.body.style.overflow = 'hidden';
+                   } else {
+    document.body.style.overflow = '';
+     }
+
+    return () => {
+    document.body.style.overflow = '';
+     };
+    }, [open]);
+
+    
 
   return createPortal(
     <AnimatePresence>
