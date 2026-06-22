@@ -40,3 +40,9 @@ export const COPY = {
     SETTINGS:   'Settings',
   },
 };
+
+
+
+
+
+// can also do object.freeze(COPY) to make it immutable, but that would require deep freeze for nested objects
