@@ -17,7 +17,7 @@ export const useGSAP = (callback, deps = []) => {
 
   useEffect(() => {
     if (!ref.current) return;
-    const ctx = gsap.context(callback, ref.current);
+    const ctx = gsap.context(()=>{callback(ref.current);}, ref.current);
     return () => ctx.revert();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);

@@ -71,7 +71,7 @@ function MockCard() {
 
 export default function Hero() {
   const navigate = useNavigate();
-  const ref = useGSAP(() => { heroTimeline(ref.current); });
+  const ref = useGSAP((container) => { heroTimeline(container); });
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden pt-16">
