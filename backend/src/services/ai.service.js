@@ -68,3 +68,98 @@ const interviewReportSchema = z.object({
   ),
 
 });
+
+
+
+
+export async function generateInterviewReport({
+  resume,
+  selfDescription,
+  jobDescription,
+}) {
+  const prompt = `
+Generate an interview report for a candidate with the following details:
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
+`;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: zodToJsonSchema(interviewReportSchema),
+    },
+  });
+
+  return JSON.parse(response.text);
+}
+
+async function generatePdfFromHtml(htmlContent) {
+  const browser = await puppeteer.launch();
+
+  const page = await browser.newPage();
+
+  await page.setContent(htmlContent, {
+    waitUntil: "networkidle0",
+  });
+
+  const pdfBuffer = await page.pdf({
+    format: "A4",
+    margin: {
+      top: "20mm",
+      bottom: "20mm",
+      left: "15mm",
+      right: "15mm",
+    },
+  });
+
+  await browser.close();
+
+  return pdfBuffer;
+}
+
+export async function generateResumePdf({
+  resume,
+  selfDescription,
+  jobDescription,
+}) {
+  const resumePdfSchema = z.object({
+    html: z.string().describe(
+      "HTML content that can be converted into PDF"
+    ),
+  });
+
+  const prompt = `
+Generate resume for a candidate with the following details:
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
+`;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: zodToJsonSchema(resumePdfSchema),
+    },
+  });
+
+  const jsonContent = JSON.parse(response.text);
+
+  return await generatePdfFromHtml(jsonContent.html);
+}
