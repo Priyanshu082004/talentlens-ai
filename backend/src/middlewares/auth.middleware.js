@@ -1,29 +1,26 @@
-import {asyncHandler} from "../utils/AsyncHandler.js";
-import {ApiError} from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
-import {User} from "../models/user.model.js";
+import tokenBlacklistModel from "../models/blacklist.model.js";
+import { asyncHandler } from "../utils/AsyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
 
-export const verifyJWT = asyncHandler(async (req, _, next) => {
-    try{
-        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+export const authUser = asyncHandler(async (req, res, next) => {
+  const token = req.cookies?.token;
 
-        if (!token) {
-            throw new ApiError(401, "Unauthorized: No token provided");
-        }
+  if (!token) {
+    throw new ApiError(401, "Token not provided.");
+  }
 
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+  const isTokenBlacklisted = await tokenBlacklistModel.findOne({
+    token,
+  });
 
-        const user = await User.findById(decodedToken._id)
-        .select("-password -refreshToken");
+  if (isTokenBlacklisted) {
+    throw new ApiError(401, "Token is invalid.");
+  }
 
-        if (!user) {
-            throw new ApiError(401, "Invalid access token");
-        }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.user = user;
-        next();
-    } catch (error) {
-        throw new ApiError(401, error?.message || "Invalid access token");
-    }
-}
-)
+  req.user = decoded;
+
+  next();
+});

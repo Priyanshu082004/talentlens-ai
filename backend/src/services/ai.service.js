@@ -4,7 +4,7 @@ import puppeteer from 'puppeteer';
 
 
 const ai= new GoogleGenAi({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY,
+    apiKey: process.env.GEMINI_API_KEY,
 
 });
 
@@ -91,7 +91,7 @@ ${jobDescription}
 `;
 
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       responseMimeType: "application/json",
@@ -101,6 +101,10 @@ ${jobDescription}
 
   return JSON.parse(response.text);
 }
+
+
+
+
 
 async function generatePdfFromHtml(htmlContent) {
   const browser = await puppeteer.launch();

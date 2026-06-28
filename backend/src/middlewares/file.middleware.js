@@ -1,34 +1,20 @@
-import jwt from "jsonwebtoken";
-import tokenBlacklistModel from "../models/blacklist.model.js";
+import multer from "multer";
+import { ApiError } from "../utils/ApiError.js";
 
-export async function authUser(req, res, next) {
-  const token = req.cookies.token;
+const upload = multer({
+  storage: multer.memoryStorage(),
 
-  if (!token) {
-    return res.status(401).json({
-      message: "Token not provided.",
-    });
-  }
+  limits: {
+    fileSize: 3 * 1024 * 1024,
+  },
 
-  const isTokenBlacklisted = await tokenBlacklistModel.findOne({
-    token,
-  });
+  fileFilter(req, file, cb) {
+    if (file.mimetype !== "application/pdf") {
+      return cb(new ApiError(400, "Only PDF files are allowed."));
+    }
 
-  if (isTokenBlacklisted) {
-    return res.status(401).json({
-      message: "Token is invalid.",
-    });
-  }
+    cb(null, true);
+  },
+});
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = decoded;
-
-    next();
-  } catch (err) {
-    return res.status(401).json({
-      message: "Invalid token.",
-    });
-  }
-}
+export default upload;

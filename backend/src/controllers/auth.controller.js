@@ -1,92 +1,134 @@
-import {User} from "../models/user.model.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import {ApiResponse} from "../utils/ApiResponse.js";
-import {ApiError} from "../utils/ApiError.js";
+import userModel from "../models/user.model.js";
+import tokenBlacklistModel from "../models/blacklist.model.js";
 
+import { asyncHandler } from "../utils/AsyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
 
+export const registerUserController = asyncHandler(async (req, res) => {
+  const { username, email, password, fullName } = req.body;
 
-const generateAccessAndRefreshTokens =  async (userId) => {
-  try{
-    const user = await User.findById(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
-
-    user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
-    return { accessToken, refreshToken };
+  if (!username || !email || !password || !fullName) {
+    throw new ApiError(
+      400,
+      "Please provide fullName, username, email and password."
+    );
   }
-  catch(error){
-    console.error("Error generating tokens:", error);
-    throw new Error("Token generation failed");
-  }  
-}   
-//  make utils for apiresponse and use that in all the controllers to send response in a consistent format with status code, message and data (if any)
 
-const registerUser = async (req, res) => {
-  try {
-    const { username, email, password } = req.body; 
+  const existingUser = await userModel.findOne({
+    $or: [{ username }, { email }],
+  });
 
-    if (!username || !email || !password) {
-      throw new ApiError(400, "Please provide all the required fields");
-    }
+  if (existingUser) {
+    throw new ApiError(
+      409,
+      "User already exists with this email or username."
+    );
+  }
 
-    const existingUser = await User.findOne({
-        $or: [{ username }, { email }]
+  const user = await userModel.create({
+    fullName,
+    username,
+    email,
+    password,
+  });
+
+  const accessToken = user.generateAccessToken();
+  const refreshToken = user.generateRefreshToken();
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(201).json({
+    message: "User registered successfully.",
+    user: {
+      id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      email: user.email,
+    },
+  });
+});
+
+export const loginUserController = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new ApiError(400, "Email and password are required.");
+  }
+
+  const user = await userModel.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(401, "Invalid email or password.");
+  }
+
+  const isPasswordCorrect = await user.isPasswordCorrect(password);
+
+  if (!isPasswordCorrect) {
+    throw new ApiError(401, "Invalid email or password.");
+  }
+
+  const accessToken = user.generateAccessToken();
+  const refreshToken = user.generateRefreshToken();
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({
+    message: "User logged in successfully.",
+    user: {
+      id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      email: user.email,
+    },
+  });
+});
+
+export const logoutUserController = asyncHandler(async (req, res) => {
+  const accessToken = req.cookies?.accessToken;
+
+  if (accessToken) {
+    await tokenBlacklistModel.create({
+      token: accessToken,
     });
-
-    if (existingUser) {
-      throw new ApiError(409, "User with this username or email already exists");
-    }
-    
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = await User.create({
-      username,
-      email,
-      password: hashedPassword,
-    });
-   
-
-  //  const token =  jwt.sign({ id: newUser._id , username: newUser.username}, 
-  //   process.env.JWT_SECRET, {
-  //       expiresIn: process.env.JWT_EXPIRES_IN,
-  //     });    instead of this use a helepr method  to generate tokens and send both access and refresh tokens in response
- 
-   
-  } catch (error) {
-    console.error("Error registering user:", error);
-    throw new ApiError(500, "Internal server error");
-  }
-}
-
-
-const loginUser = async (req, res) => {
-  try {
-    const { email, password , username} = req.body;
-    if (!email && !password) {
-      throw new ApiError(400, "Please provide both email and password");
-    } 
-    const user = await User.findOne({ 
-      $or: [{ email }, { username }]
-    });
-    if (!user) {
-      throw new ApiError(404, "Invalid email or username");
-    }
-    const isPasswordValid = await User.isPaaswordCorrect(password);
-    if (!isPasswordValid) {
-      throw new ApiError(401, "Invalid password");
-    }
-    const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
-
-    const loggedInUser =  await User.findById(user._id).select("-password -refreshToken");
-    res
-    .status(200)
-    .json(new ApiResponse(200, 
-      "Login successful",
-       { user: loggedInUser, accessToken, refreshToken }));
-  }
-  catch (error) {
-    console.error("Error logging in user:", error); }
   }
 
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+
+  res.status(200).json({
+    message: "User logged out successfully.",
+  });
+});
+
+export const getMeController = asyncHandler(async (req, res) => {
+  const user = await userModel.findById(req.user._id).select("-password");
+
+  if (!user) {
+    throw new ApiError(404, "User not found.");
+  }
+
+  res.status(200).json({
+    message: "User fetched successfully.",
+    user,
+  });
+});
