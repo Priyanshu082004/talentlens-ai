@@ -13,7 +13,7 @@ const Landing         = lazy(() => import('@pages/Landing/Landing'));
 const Login           = lazy(() => import('@pages/Auth/Login/Login'));
 const Signup           = lazy(() => import('@pages/Auth/Signup/Signup'));
 const Dashboard        = lazy(() => import('@pages/Dashboard/Dashboard'));
-const ResumeAnalysis   = lazy(() => import('@pages/Dashboard/sections/ResumeAnalysis'));
+const ResumeAnalysis   = lazy(() => import('@pages/Dashboard/sections/ResumeUpload'));
 const AnalysisHistory  = lazy(() => import('@pages/Dashboard/sections/AnalysisHistory'));
 
 function NotFound() {

@@ -1,4 +1,4 @@
-import { useScrollProgress } from '@hooks/useScrollProgress.jsx';
+import { useScrollProgress } from '@hooks/useScrollProgress.js';
 import Hero         from './sections/Hero.jsx';
 import TrustedBy    from './sections/TrustedBy.jsx';
 import Features     from './sections/Features.jsx';
