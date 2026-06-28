@@ -1,12 +1,12 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import {Link} from 'react-router-dom';
-import PublicLayout    from '@layouts/PublicLayout';
-import DashboardLayout from '@layouts/DashboardLayout';
-import PublicRoutes    from './PublicRoutes';
-import ProtectedRoutes from './ProtectedRoutes';
-import LoadingScreen   from '@components/shared/LoadingScreen/LoadingScreen';
-import { ROUTES } from '@constants/routes';
+import PublicLayout    from '@layouts/PublicLayout.jsx';
+import DashboardLayout from '@layouts/DashboardLayout.jsx';
+import PublicRoutes    from './PublicRoutes.jsx';
+import ProtectedRoutes from './ProtectedRoutes.jsx';
+import LoadingScreen   from '@components/shared/LoadingScreen/LoadingScreen.jsx';
+import { ROUTES } from '@constants/routes.js';
 
 //  Lazy load all route components for better performance and code splitting
 const Landing         = lazy(() => import('@pages/Landing/Landing'));

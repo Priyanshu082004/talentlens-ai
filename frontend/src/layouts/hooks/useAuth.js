@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginUser, registerUser, logoutUser, clearError } from '@redux/slices/authSlice';
-import { ROUTES } from '@constants/routes';
+import { loginUser, registerUser, logoutUser, clearError } from '@redux/slices/authSlice.js';
+import { ROUTES } from '@constants/routes.js';
 
 export const useAuth = () => {
   const dispatch = useDispatch();

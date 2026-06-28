@@ -1,7 +1,7 @@
 import { CheckCircle, XCircle } from 'lucide-react';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import ProgressBar from '@components/ui/ProgressBar/ProgressBar';
-import Badge from '@components/ui/Badge/Badge';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import ProgressBar from '@components/ui/ProgressBar/ProgressBar.jsx';
+import Badge from '@components/ui/Badge/Badge.jsx';
 
 export default function SkillGap({ skillGap = {} }) {
   const matched = skillGap.matched || [];

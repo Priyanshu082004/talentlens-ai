@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { useGSAP } from '@hooks/useGSAP';
-import { heroTimeline } from '@animations/gsap.config';
-import OrbGlow from '@components/shared/OrbGlow/OrbGlow';
-import Button from '@components/ui/Button/Button';
-import { ROUTES } from '@constants/routes';
-import { COPY } from '@constants/copy';
+import { useGSAP } from '@hooks/useGSAP.js';
+import { heroTimeline } from '@animations/gsap.config.js';
+import OrbGlow from '@components/shared/OrbGlow/OrbGlow.jsx';
+import Button from '@components/ui/Button/Button.jsx';
+import { ROUTES } from '@constants/routes.js';
+import { COPY } from '@constants/copy.js';
 
 
 

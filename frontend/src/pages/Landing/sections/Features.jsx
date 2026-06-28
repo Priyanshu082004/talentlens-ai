@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FileSearch, BarChart3, Layers, Lightbulb, Target, Bot } from 'lucide-react';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import { staggerContainer, staggerItem } from '@animations/framerVariants';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import { staggerContainer, staggerItem } from '@animations/framerVariants.js';
 
 const FEATURES = [
   { icon: BarChart3, title: 'ATS Score Generation', desc: 'Get a precise ATS compatibility score. Know exactly how automated filters see your resume before a human ever does.', color: '#6366F1', badge: 'Core' },

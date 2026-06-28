@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { useAuth } from '@hooks/useAuth';
-import Button from '@components/ui/Button/Button';
-import { ROUTES } from '@constants/routes';
+import { useAuth } from '@hooks/useAuth.js';
+import Button from '@components/ui/Button/Button.jsx';
+import { ROUTES } from '@constants/routes.js';
 
 
 

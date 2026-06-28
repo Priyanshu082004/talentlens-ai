@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, Search, Trash2, SortAsc, SortDesc } from 'lucide-react';
-import { fetchHistory, deleteAnalysis } from '@redux/slices/resumeSlice';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import Button from '@components/ui/Button/Button';
-import Badge from '@components/ui/Badge/Badge';
-import Input from '@components/ui/Input/Input';
-import { staggerContainer, staggerItem } from '@animations/framerVariants';
-import { formatDateTime } from '@utils/formatScore';
+import { fetchHistory, deleteAnalysis } from '@redux/slices/resumeSlice.js';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import Button from '@components/ui/Button/Button.jsx';
+import Badge from '@components/ui/Badge/Badge.jsx';
+import Input from '@components/ui/Input/Input.jsx';
+import { staggerContainer, staggerItem } from '@animations/framerVariants.js';
+import { formatDateTime } from '@utils/formatScore.js';
 
 function ScoreBadge({ score }) {
   const variant = score >= 80 ? 'success' : score >= 60 ? 'warning' : 'danger';

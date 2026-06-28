@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
 
 const TESTIMONIALS = [
   { name: 'Arjun Mehta', role: 'SDE-2 @ Amazon', avatar: 'AM', color: '#6366F1', text: 'Got my ATS score from 54 to 89 in one iteration. The keyword suggestions were spot-on for the JD. Landed my Amazon offer 3 weeks later.', stars: 5 },

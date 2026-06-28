@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import { accordionContent } from '@animations/framerVariants';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import { accordionContent } from '@animations/framerVariants.js';
 
 export default function Suggestions({ suggestions = [] }) {
   const [openIdx, setOpenIdx] = useState(null);

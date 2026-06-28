@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { CheckCircle, XCircle, Lightbulb } from 'lucide-react';
-import CircularProgress from '@components/ui/CircularProgress/CircularProgress';
-import ProgressBar from '@components/ui/ProgressBar/ProgressBar';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
+import CircularProgress from '@components/ui/CircularProgress/CircularProgress.jsx';
+import ProgressBar from '@components/ui/ProgressBar/ProgressBar.jsx';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
 
 const PANELS = [
   { id: 'ats', label: 'ATS Score', headline: 'Know your score before you apply', sub: 'Our AI scores your resume against the role\'s ATS criteria — giving you a number you can actually improve.' },

@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import Sidebar from '@components/layout/Sidebar/Sidebar';
-import { pageTransition } from '@animations/framerVariants';
+import Sidebar from '@components/layout/Sidebar/Sidebar.jsx';
+import { pageTransition } from '@animations/framerVariants.js';
 
 export default function DashboardLayout() {
   const location = useLocation();

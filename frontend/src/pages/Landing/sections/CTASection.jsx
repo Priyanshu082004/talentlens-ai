@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap } from 'lucide-react';
-import Button from '@components/ui/Button/Button';
-import { ROUTES } from '@constants/routes';
+import Button from '@components/ui/Button/Button.jsx';
+import { ROUTES } from '@constants/routes.js';
 
 export default function CTASection() {
   const navigate = useNavigate();

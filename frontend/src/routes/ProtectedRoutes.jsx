@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ROUTES } from '@constants/routes';
+import { ROUTES } from '@constants/routes.js';
 
 /**
  * Guards routes that require authentication (dashboard and children).

@@ -1,12 +1,12 @@
-import { useScrollProgress } from '@hooks/useScrollProgress';
-import Hero         from './sections/Hero';
-import TrustedBy    from './sections/TrustedBy';
-import Features     from './sections/Features';
-import HowItWorks   from './sections/HowItWorks';
-import AIShowcase   from './sections/AIShowcase';
-import Testimonials from './sections/Testimonials';
-import FAQ          from './sections/FAQ';
-import CTASection   from './sections/CTASection';
+import { useScrollProgress } from '@hooks/useScrollProgress.jsx';
+import Hero         from './sections/Hero.jsx';
+import TrustedBy    from './sections/TrustedBy.jsx';
+import Features     from './sections/Features.jsx';
+import HowItWorks   from './sections/HowItWorks.jsx';
+import AIShowcase   from './sections/AIShowcase.jsx';
+import Testimonials from './sections/Testimonials.jsx';
+import FAQ          from './sections/FAQ.jsx';
+import CTASection   from './sections/CTASection.jsx';
 import styles from './Landing.module.css';
 
 export default function Landing() {

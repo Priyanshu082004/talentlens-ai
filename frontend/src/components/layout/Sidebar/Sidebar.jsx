@@ -5,9 +5,9 @@ import {
   User, Settings, ChevronLeft, ChevronRight, Zap, LogOut,
 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '@redux/slices/uiSlice';
-import { useAuth } from '@hooks/useAuth';
-import { ROUTES } from '@constants/routes';
+import { toggleSidebar } from '@redux/slices/uiSlice.js';
+import { useAuth } from '@hooks/useAuth.js';
+import { ROUTES } from '@constants/routes.js';
 import { sidebarVariants } from '@animations/framerVariants';
 import clsx from 'clsx';
 

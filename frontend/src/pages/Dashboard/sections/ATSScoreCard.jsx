@@ -1,6 +1,6 @@
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import CircularProgress from '@components/ui/CircularProgress/CircularProgress';
-import { scoreLabel } from '@utils/formatScore';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import CircularProgress from '@components/ui/CircularProgress/CircularProgress.jsx';
+import { scoreLabel } from '@utils/formatScore.js';
 
 /**
  * Standalone ATS score card — shows the circular ring plus a

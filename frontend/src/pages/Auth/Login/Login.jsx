@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Zap } from 'lucide-react';
-import { useAuth } from '@hooks/useAuth';
-import Button  from '@components/ui/Button/Button';
-import Input   from '@components/ui/Input/Input';
-import OrbGlow from '@components/shared/OrbGlow/OrbGlow';
-import { staggerContainer, staggerItem } from '@animations/framerVariants';
-import { ROUTES } from '@constants/routes';
+import { useAuth } from '@hooks/useAuth.js';
+import Button  from '@components/ui/Button/Button.jsx';
+import Input   from '@components/ui/Input/Input.jsx';
+import OrbGlow from '@components/shared/OrbGlow/OrbGlow.jsx';
+import { staggerContainer, staggerItem } from '@animations/framerVariants.js';
+import { ROUTES } from '@constants/routes.js';
 import styles from './Login.module.css';
 
 export default function Login() {

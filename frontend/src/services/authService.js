@@ -1,6 +1,6 @@
 
 import api from './api';
-import { API } from '@constants/api';
+import { API } from '@constants/api.js';
 
 const authService = {
   login:    (credentials)  => api.post(API.AUTH.LOGIN,    credentials).then((r) => r.data),

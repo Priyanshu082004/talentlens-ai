@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Zap } from 'lucide-react';
-import { ROUTES } from '@constants/routes';
+import { ROUTES } from '@constants/routes.js';
 
 
 

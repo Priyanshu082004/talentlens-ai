@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { modalBackdrop, modalPanel } from '@animations/framerVariants';
+import { modalBackdrop, modalPanel } from '@animations/framerVariants.js';
 import { useEffect } from 'react';
 
 

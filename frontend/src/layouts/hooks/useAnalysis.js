@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useCallback } from 'react';
-import { fetchHistory, deleteAnalysis, clearAnalysis } from '@redux/slices/resumeSlice';
+import { fetchHistory, deleteAnalysis, clearAnalysis } from '@redux/slices/resumeSlice.js';
 
 /**
  * Central hook for reading/managing resume analysis state.

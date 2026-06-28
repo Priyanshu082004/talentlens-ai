@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, ChevronDown, Tag, MessageSquare } from 'lucide-react';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import Badge from '@components/ui/Badge/Badge';
-import ATSScoreCard from './ATSScoreCard';
-import SkillGap from './SkillGap';
-import Suggestions from './Suggestions';
-import { staggerContainer, staggerItem, accordionContent } from '@animations/framerVariants';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import Badge from '@components/ui/Badge/Badge.jsx';
+import ATSScoreCard from './ATSScoreCard.jsx';
+import SkillGap from './SkillGap.jsx';
+import Suggestions from './Suggestions.jsx';
+import { staggerContainer, staggerItem, accordionContent } from '@animations/framerVariants.js';
 
 function StrengthsWeaknesses({ strengths = [], weaknesses = [] }) {
   return (

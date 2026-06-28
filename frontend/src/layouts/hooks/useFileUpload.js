@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { uploadAndAnalyze } from '@redux/slices/resumeSlice';
-import { validateResumeFile } from '@utils/fileValidation';
+import { uploadAndAnalyze } from '@redux/slices/resumeSlice.js';
+import { validateResumeFile } from '@utils/fileValidation.js';
 
 export const useFileUpload = () => {
   const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, File, AlertCircle, CheckCircle } from 'lucide-react';
-import { useFileUpload } from '@hooks/useFileUpload';
+import { useFileUpload } from '@hooks/useFileUpload.js';
 import { useSelector } from 'react-redux';
-import { uploadZoneVariants } from '@animations/framerVariants';
-import { COPY } from '@constants/copy';
-import Button from '@components/ui/Button/Button';
+import { uploadZoneVariants } from '@animations/framerVariants.js';
+import { COPY } from '@constants/copy.js';
+import Button from '@components/ui/Button/Button.jsx';
 
 export default function ResumeUpload() {
   const inputRef = useRef(null);

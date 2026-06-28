@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/ScrollTrigger.js';
 
-import { store } from '@redux/store';
+import { store } from '@redux/store.js';
 import AppRoutes from '@/routes';
 
 import './styles/globals.css';
