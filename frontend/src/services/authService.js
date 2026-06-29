@@ -1,12 +1,26 @@
-
-import api from './api';
-import { API } from '@constants/api.js';
+import api from "./api.js";
+import { API } from "@constants/api.js";
 
 const authService = {
-  login:    (credentials)  => api.post(API.AUTH.LOGIN,    credentials).then((r) => r.data),
-  register: (userData)     => api.post(API.AUTH.REGISTER, userData).then((r) => r.data),
-  me:       ()             => api.get(API.AUTH.ME).then((r) => r.data),
-  logout:   ()             => api.post(API.AUTH.LOGOUT).then((r) => r.data),
+  async login(credentials) {
+    const { data } = await api.post(API.AUTH.LOGIN, credentials);
+    return data;
+  },
+
+  async register(userData) {
+    const { data } = await api.post(API.AUTH.REGISTER, userData);
+    return data;
+  },
+
+  async me() {
+    const { data } = await api.get(API.AUTH.ME);
+    return data;
+  },
+
+  async logout() {
+    const { data } = await api.post(API.AUTH.LOGOUT);
+    return data;
+  },
 };
 
 export default authService;

@@ -1,4 +1,4 @@
-import userModel from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import tokenBlacklistModel from "../models/blacklist.model.js";
 
 import { asyncHandler } from "../utils/AsyncHandler.js";
@@ -14,7 +14,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
     );
   }
 
-  const existingUser = await userModel.findOne({
+  const existingUser = await User.findOne({
     $or: [{ username }, { email }],
   });
 
@@ -25,7 +25,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
     );
   }
 
-  const user = await userModel.create({
+  const user = await User.create({
     fullName,
     username,
     email,
@@ -65,7 +65,7 @@ export const loginUserController = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Email and password are required.");
   }
 
-  const user = await userModel.findOne({ email });
+  const user = await User.findOne({ email });
 
   if (!user) {
     throw new ApiError(401, "Invalid email or password.");
@@ -121,7 +121,7 @@ export const logoutUserController = asyncHandler(async (req, res) => {
 });
 
 export const getMeController = asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id).select("-password");
+  const user = await User.findById(req.user._id).select("-password");
 
   if (!user) {
     throw new ApiError(404, "User not found.");

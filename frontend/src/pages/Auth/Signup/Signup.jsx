@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Mail, Lock, Eye, EyeOff, Zap } from 'lucide-react';
+import { User, AtSign, Mail, Lock, Eye, EyeOff, Zap } from 'lucide-react';
 import { useAuth } from '@hooks/useAuth.js';
 import Button  from '@components/ui/Button/Button.jsx';
 import Input   from '@components/ui/Input/Input.jsx';
@@ -29,15 +29,25 @@ export default function Signup() {
   const [showPw,  setShowPw]  = useState(false);
   const [showCpw, setShowCpw] = useState(false);
   const [agreed,  setAgreed]  = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+
+  // Backend requires: fullName, username, email, password
+  const [form, setForm] = useState({
+    fullName:        '',
+    username:        '',
+    email:           '',
+    password:        '',
+    confirmPassword: '',
+  });
   const [errors, setErrors] = useState({});
 
   const strength = getStrength(form.password);
 
   const validate = () => {
     const e = {};
-    if (!form.name)     e.name = 'Name is required';
-    if (!form.email)    e.email = 'Email is required';
+    if (!form.fullName) e.fullName = 'Full name is required';
+    if (!form.username) e.username = 'Username is required';
+    if (/\s/.test(form.username)) e.username = 'Username cannot contain spaces';
+    if (!form.email)    e.email    = 'Email is required';
     if (form.email && !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email';
     if (!form.password) e.password = 'Password is required';
     if (form.password.length < 8) e.password = 'At least 8 characters required';
@@ -51,7 +61,13 @@ export default function Signup() {
     e.preventDefault();
     if (!validate()) return;
     dismissError();
-    await signup({ name: form.name, email: form.email, password: form.password });
+    // Send exactly what the backend expects
+    await signup({
+      fullName: form.fullName,
+      username: form.username,
+      email:    form.email,
+      password: form.password,
+    });
   };
 
   const set = (field) => (e) => {
@@ -70,7 +86,7 @@ export default function Signup() {
             <div className="w-9 h-9 rounded-xl bg-gradient-hero flex items-center justify-center">
               <Zap size={18} className="text-white" />
             </div>
-            <span className="font-display font-bold text-white text-xl">TalentLens-AI</span>
+            <span className="font-display font-bold text-white text-xl">ResumeAI</span>
           </Link>
         </motion.div>
 
@@ -88,8 +104,25 @@ export default function Signup() {
           )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <Input label="Full name" placeholder="Priyanshu Sharma" value={form.name} onChange={set('name')} icon={User} error={errors.name} required />
-            <Input label="Email" type="email" placeholder="you@example.com" value={form.email} onChange={set('email')} icon={Mail} error={errors.email} required />
+            {/* fullName — maps to backend field */}
+            <Input
+              label="Full name" placeholder="Priyanshu Sharma"
+              value={form.fullName} onChange={set('fullName')}
+              icon={User} error={errors.fullName} required
+            />
+
+            {/* username — required by backend register */}
+            <Input
+              label="Username" placeholder="priyanshu_dev"
+              value={form.username} onChange={set('username')}
+              icon={AtSign} error={errors.username} required
+            />
+
+            <Input
+              label="Email" type="email" placeholder="you@example.com"
+              value={form.email} onChange={set('email')}
+              icon={Mail} error={errors.email} required
+            />
 
             <div className="flex flex-col gap-1.5">
               <Input
@@ -135,12 +168,16 @@ export default function Signup() {
               {errors.agreed && <p className="text-xs text-red-400">⚠ {errors.agreed}</p>}
             </div>
 
-            <Button type="submit" loading={isLoading} fullWidth size="lg" className="mt-2">Create account</Button>
+            <Button type="submit" loading={isLoading} fullWidth size="lg" className="mt-2">
+              Create account
+            </Button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Already have an account?{' '}
-            <Link to={ROUTES.LOGIN} className="text-primary-400 hover:text-primary-300 transition-colors font-medium">Sign in</Link>
+            <Link to={ROUTES.LOGIN} className="text-primary-400 hover:text-primary-300 transition-colors font-medium">
+              Sign in
+            </Link>
           </p>
         </motion.div>
       </motion.div>

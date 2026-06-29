@@ -4,7 +4,7 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 
 export const authUser = asyncHandler(async (req, res, next) => {
-  const token = req.cookies?.token;
+  const token = req.cookies?.accessToken || req.cookies?.token;
 
   if (!token) {
     throw new ApiError(401, "Token not provided.");
@@ -18,7 +18,7 @@ export const authUser = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "Token is invalid.");
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET);
 
   req.user = decoded;
 

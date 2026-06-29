@@ -8,14 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '@redux/slices/uiSlice.js';
 import { useAuth } from '@hooks/useAuth.js';
 import { ROUTES } from '@constants/routes.js';
-import { sidebarVariants } from '@animations/framerVariants';
+import { sidebarVariants } from '@animations/framerVariants.js';
 import clsx from 'clsx';
 
-
-
-
-
-//  object configuration for sidebar nav items, similar to how it's done in Navbar and Footer, to maintain consistency and make future updates easier
 const NAV_ITEMS = [
   { label: 'Dashboard', icon: LayoutDashboard, path: ROUTES.DASHBOARD },
   { label: 'Analysis',  icon: FileText,        path: ROUTES.ANALYSIS },
@@ -29,6 +24,7 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const { logout } = useAuth();
   const { sidebarCollapsed } = useSelector((s) => s.ui);
+  // Backend returns fullName (not name)
   const { user } = useSelector((s) => s.auth);
 
   return (
@@ -37,6 +33,7 @@ export default function Sidebar() {
       animate={sidebarCollapsed ? 'collapsed' : 'expanded'}
       className="fixed left-0 top-0 h-screen bg-bg-surface border-r border-white/5 flex flex-col z-40 overflow-hidden"
     >
+      {/* Logo */}
       <div className="h-16 flex items-center px-4 border-b border-white/5 shrink-0">
         <Link to={ROUTES.HOME} className="flex items-center gap-3 overflow-hidden">
           <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center shrink-0">
@@ -44,12 +41,13 @@ export default function Sidebar() {
           </div>
           {!sidebarCollapsed && (
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-display font-bold text-white text-base whitespace-nowrap">
-              TalentLens-AI
+              ResumeAI
             </motion.span>
           )}
         </Link>
       </div>
 
+      {/* Nav items */}
       <nav className="flex-1 py-4 px-2 flex flex-col gap-1 overflow-y-auto">
         {NAV_ITEMS.map(({ label, icon: Icon, path }) => {
           const active = location.pathname === path;
@@ -76,15 +74,17 @@ export default function Sidebar() {
         })}
       </nav>
 
+      {/* User + logout */}
       <div className="p-2 border-t border-white/5 flex flex-col gap-1">
         {user && (
           <div className={clsx('flex items-center gap-3 px-3 py-2 rounded-xl', !sidebarCollapsed && 'mb-1')}>
             <div className="w-8 h-8 rounded-full bg-gradient-hero flex items-center justify-center text-xs font-bold text-white shrink-0">
-              {user.name?.[0]?.toUpperCase() || 'U'}
+              {/* fullName from backend */}
+              {user.fullName?.[0]?.toUpperCase() || user.username?.[0]?.toUpperCase() || 'U'}
             </div>
             {!sidebarCollapsed && (
               <div className="overflow-hidden">
-                <p className="text-sm font-medium text-white truncate">{user.name}</p>
+                <p className="text-sm font-medium text-white truncate">{user.fullName}</p>
                 <p className="text-xs text-gray-500 truncate">{user.email}</p>
               </div>
             )}

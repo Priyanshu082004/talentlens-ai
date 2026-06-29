@@ -1,13 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import resumeService from '@services/resumeService.js';
 
+
+
 export const uploadAndAnalyze = createAsyncThunk(
   'resume/analyze',
-  async (file, { dispatch, rejectWithValue }) => {
+  async ({ file, selfDescription, jobDescription }, { dispatch, rejectWithValue }) => {
     try {
-      return await resumeService.analyzeResume(file, (pct) => {
-        dispatch(setUploadProgress(pct));
-      });
+      return await resumeService.analyzeResume(
+        file,
+        selfDescription,
+        jobDescription,
+        (pct) => dispatch(setUploadProgress(pct))
+      );
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Analysis failed. Please try again.');
     }
@@ -22,43 +27,53 @@ export const fetchHistory = createAsyncThunk(
   }
 );
 
-export const deleteAnalysis = createAsyncThunk(
-  'resume/delete',
+export const fetchReportById = createAsyncThunk(
+  'resume/fetchById',
   async (id, { rejectWithValue }) => {
-    try { await resumeService.deleteEntry(id); return id; }
+    try { return await resumeService.getById(id); }
     catch (err) { return rejectWithValue(err.response?.data?.message); }
   }
 );
 
+// No delete endpoint exists in the backend — noted in integration checklist.
+
 const resumeSlice = createSlice({
   name: 'resume',
   initialState: {
-    // uploadedFile:     null,  // This is not needed as we are not storing the file in the state   
-    uploadProgress:   0,
-    isAnalyzing:      false,
-    analysisResult:   null,
-    history:          [],
-    isLoadingHistory: false,
-    error:            null,
-    currentStep:      0, // 0=idle 1=uploading 2=parsing 3=analyzing 4=done
+    uploadedFile:      null,
+    uploadProgress:    0,
+    isAnalyzing:       false,
+    analysisResult:    null,  // full interviewReport object
+    history:           [],    // trimmed interviewReport list
+    isLoadingHistory:  false,
+    error:             null,
+    currentStep:       0,     // 0=idle 1=uploading 2=parsing 3=analyzing 4=done
+    // Store the form values so UI components can read them
+    selfDescription:   '',
+    jobDescription:    '',
   },
   reducers: {
-    setUploadProgress: (state, { payload }) => {
+    setUploadProgress:   (state, { payload }) => {
       state.uploadProgress = payload;
       state.currentStep    = payload < 100 ? 1 : 2;
     },
-    setCurrentStep:    (state, { payload }) => { state.currentStep = payload; },
-    clearAnalysis:     (state) => {
-      state.analysisResult = null;
-      state.uploadProgress = 0;
-      state.currentStep    = 0;
-      state.error          = null;
+    setCurrentStep:      (state, { payload }) => { state.currentStep = payload; },
+    setSelfDescription:  (state, { payload }) => { state.selfDescription = payload; },
+    setJobDescription:   (state, { payload }) => { state.jobDescription  = payload; },
+    clearAnalysis:       (state) => {
+      state.analysisResult   = null;
+      state.uploadProgress   = 0;
+      state.currentStep      = 0;
+      state.error            = null;
+      state.selfDescription  = '';
+      state.jobDescription   = '';
     },
-    clearError:        (state) => { state.error = null; },
+    clearError:          (state) => { state.error = null; },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(uploadAndAnalyze.pending,   (state) => {
+  extraReducers: (b) => {
+    b
+      // Upload & Analyze
+      .addCase(uploadAndAnalyze.pending, (state) => {
         state.isAnalyzing    = true;
         state.error          = null;
         state.uploadProgress = 0;
@@ -69,42 +84,39 @@ const resumeSlice = createSlice({
         state.isAnalyzing    = false;
         state.uploadProgress = 100;
         state.currentStep    = 4;
-        state.analysisResult = payload;
+        // payload = { message, interviewReport }
+        state.analysisResult = payload.interviewReport;
       })
-      .addCase(uploadAndAnalyze.rejected,  (state, { payload }) => {
-        state.isAnalyzing    = false;
-        state.currentStep    = 0;
-        state.error          = payload;
+      .addCase(uploadAndAnalyze.rejected, (state, { payload }) => {
+        state.isAnalyzing = false;
+        state.currentStep = 0;
+        state.error       = payload;
       })
+
+      // History
       .addCase(fetchHistory.pending,   (state) => { state.isLoadingHistory = true; })
       .addCase(fetchHistory.fulfilled, (state, { payload }) => {
         state.isLoadingHistory = false;
-        state.history          = payload;
+        // payload = { message, interviewReports }
+        state.history = payload.interviewReports || [];
       })
       .addCase(fetchHistory.rejected,  (state) => { state.isLoadingHistory = false; })
-      .addCase(deleteAnalysis.fulfilled, (state, { payload: id }) => {
-        state.history = state.history.filter((h) => h._id !== id && h.id !== id);
+
+      // Fetch by ID
+      .addCase(fetchReportById.fulfilled, (state, { payload }) => {
+        state.analysisResult = payload.interviewReport;
+        state.currentStep    = 4;
       });
   },
 });
 
-export const { setUploadProgress, setCurrentStep, clearAnalysis, clearError } = resumeSlice.actions;
+export const {
+  setUploadProgress,
+  setCurrentStep,
+  setSelfDescription,
+  setJobDescription,
+  clearAnalysis,
+  clearError,
+} = resumeSlice.actions;
+
 export default resumeSlice.reducer;
-
-
-
-
-
-
-// this slice does the following work
-
-// {
-//   uploadedFile,
-//   uploadProgress,
-//   isAnalyzing,
-//   analysisResult,
-//   history,
-//   isLoadingHistory,
-//   error,
-//   currentStep
-// }

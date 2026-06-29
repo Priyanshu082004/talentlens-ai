@@ -1,9 +1,9 @@
-import {GoogleGenAi} from '@google-ai/generative';
+import {GoogleGenAI} from '@google/genai';
 import {z} from 'zod';
 import puppeteer from 'puppeteer';
 
 
-const ai= new GoogleGenAi({
+const ai= new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
 
 });
@@ -167,3 +167,7 @@ ${jobDescription}
 
   return await generatePdfFromHtml(jsonContent.html);
 }
+
+
+
+

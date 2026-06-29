@@ -1,21 +1,62 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, File, AlertCircle, CheckCircle } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFileUpload } from '@hooks/useFileUpload.js';
-import { useSelector } from 'react-redux';
+import { setSelfDescription, setJobDescription } from '@redux/slices/resumeSlice.js';
 import { uploadZoneVariants } from '@animations/framerVariants.js';
 import { COPY } from '@constants/copy.js';
 import Button from '@components/ui/Button/Button.jsx';
 
+/**
+ * ResumeUpload
+ *
+ * Renders:
+ *  1. Self-description textarea  (required by backend)
+ *  2. Job description textarea   (required by backend)
+ *  3. PDF drag-and-drop upload zone
+ *
+ * All three values are sent together on POST /api/interview (multipart).
+ */
 export default function ResumeUpload() {
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
   const { dragActive, fileError, fileName, onDrop, onDragOver, onDragLeave, onInputChange } = useFileUpload();
-  const { isAnalyzing, uploadProgress } = useSelector((s) => s.resume);
+  const { isAnalyzing, uploadProgress, selfDescription, jobDescription } = useSelector((s) => s.resume);
 
   const zoneState = fileError ? 'error' : fileName ? 'success' : dragActive ? 'dragging' : 'idle';
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col gap-5">
+      {/* Self description */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-gray-300">
+          About yourself <span className="text-red-400">*</span>
+        </label>
+        <textarea
+          rows={3}
+          placeholder="Briefly describe yourself — your experience level, key skills, and what role you're targeting..."
+          value={selfDescription}
+          onChange={(e) => dispatch(setSelfDescription(e.target.value))}
+          className="w-full bg-bg-surface rounded-xl px-4 py-3 text-sm text-white border border-white/10 hover:border-white/20 focus:border-primary-500 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.15)] outline-none transition-all duration-200 placeholder:text-gray-600 resize-none"
+        />
+      </div>
+
+      {/* Job description */}
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-gray-300">
+          Job description <span className="text-red-400">*</span>
+        </label>
+        <textarea
+          rows={4}
+          placeholder="Paste the job description for the role you're applying to — the AI will tailor the analysis and interview questions to this role..."
+          value={jobDescription}
+          onChange={(e) => dispatch(setJobDescription(e.target.value))}
+          className="w-full bg-bg-surface rounded-xl px-4 py-3 text-sm text-white border border-white/10 hover:border-white/20 focus:border-primary-500 focus:shadow-[0_0_0_3px_rgba(99,102,241,0.15)] outline-none transition-all duration-200 placeholder:text-gray-600 resize-none"
+        />
+      </div>
+
+      {/* PDF upload zone */}
       <motion.div
         variants={uploadZoneVariants}
         animate={zoneState}
@@ -23,7 +64,7 @@ export default function ResumeUpload() {
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onClick={() => !isAnalyzing && inputRef.current?.click()}
-        className="relative border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all min-h-[200px]"
+        className="relative border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all min-h-[180px]"
       >
         <AnimatePresence>
           {dragActive && (
@@ -42,7 +83,11 @@ export default function ResumeUpload() {
           <div className="w-full max-w-xs">
             <p className="text-sm font-medium text-white mb-3">{COPY.UPLOAD.ANALYZING}</p>
             <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <motion.div className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full" animate={{ width: `${uploadProgress}%` }} transition={{ duration: 0.3 }} />
+              <motion.div
+                className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"
+                animate={{ width: `${uploadProgress}%` }}
+                transition={{ duration: 0.3 }}
+              />
             </div>
             <p className="text-xs text-gray-500 mt-2 font-mono">{uploadProgress}%</p>
           </div>
@@ -53,7 +98,9 @@ export default function ResumeUpload() {
           </>
         ) : (
           <>
-            <p className="text-sm font-medium text-white mb-1">{dragActive ? COPY.UPLOAD.DRAGGING : COPY.UPLOAD.IDLE}</p>
+            <p className="text-sm font-medium text-white mb-1">
+              {dragActive ? COPY.UPLOAD.DRAGGING : COPY.UPLOAD.IDLE}
+            </p>
             <p className="text-xs text-gray-500 mb-4">{COPY.UPLOAD.IDLE_SUB}</p>
             <Button variant="secondary" size="sm" type="button" onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}>
               Browse files

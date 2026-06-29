@@ -1,144 +1,208 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, ChevronDown, Tag, MessageSquare } from 'lucide-react';
+import { ChevronDown, Brain, MessageCircle, Download } from 'lucide-react';
 import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
-import Badge from '@components/ui/Badge/Badge.jsx';
+// import Badge from '@components/ui/Badge/Badge';
 import ATSScoreCard from './ATSScoreCard.jsx';
 import SkillGap from './SkillGap.jsx';
 import Suggestions from './Suggestions.jsx';
 import { staggerContainer, staggerItem, accordionContent } from '@animations/framerVariants.js';
+import resumeService from '@services/resumeService.js';
+import Button from '@components/ui/Button/Button.jsx';
+import Toast from '@components/ui/Toast/Toast.jsx';
 
-function StrengthsWeaknesses({ strengths = [], weaknesses = [] }) {
-  return (
-    <div className="grid sm:grid-cols-2 gap-5">
-      <GlassCard>
-        <h3 className="font-display font-semibold text-white text-sm mb-4 flex items-center gap-2">
-          <CheckCircle size={15} className="text-emerald-400" /> Strengths
-        </h3>
-        <ul className="space-y-2.5">
-          {strengths.map((s, i) => (
-            <motion.li key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }} className="flex items-start gap-2.5 text-sm text-gray-300">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-              {s}
-            </motion.li>
-          ))}
-          {!strengths.length && <p className="text-xs text-gray-600">No strengths detected.</p>}
-        </ul>
-      </GlassCard>
+/**
+ * AnalysisResults
+ *
+ * Renders the full interviewReport returned by the backend.
+ *
+ * Backend shape:
+ * {
+ *   _id, title, matchScore,
+ *   technicalQuestions:  [{ question, intention, answer }],
+ *   behavioralQuestions: [{ question, intention, answer }],
+ *   skillGaps:           [{ skill, severity }],
+ *   preparationPlan:     [{ day, focus, tasks[] }],
+ * }
+ */
 
-      <GlassCard>
-        <h3 className="font-display font-semibold text-white text-sm mb-4 flex items-center gap-2">
-          <XCircle size={15} className="text-red-400" /> Weaknesses
-        </h3>
-        <ul className="space-y-2.5">
-          {weaknesses.map((w, i) => (
-            <motion.li key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }} className="flex items-start gap-2.5 text-sm text-gray-300">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 shrink-0" />
-              {w}
-            </motion.li>
-          ))}
-          {!weaknesses.length && <p className="text-xs text-gray-600">No weaknesses detected.</p>}
-        </ul>
-      </GlassCard>
-    </div>
-  );
-}
-
-function Keywords({ keywords = [], skillGap = {} }) {
-  const missing = new Set(skillGap.missing || []);
-  return (
-    <GlassCard>
-      <h3 className="font-display font-semibold text-white text-sm mb-4 flex items-center gap-2">
-        <Tag size={14} className="text-primary-400" /> Keyword Optimization
-      </h3>
-      <div className="flex flex-wrap gap-2">
-        {keywords.map((kw) => <Badge key={kw} variant={missing.has(kw) ? 'danger' : 'primary'}>{kw}</Badge>)}
-        {!keywords.length && <p className="text-xs text-gray-600">No keywords extracted.</p>}
-      </div>
-      <div className="flex gap-4 mt-4 pt-4 border-t border-white/5">
-        <div className="flex items-center gap-1.5 text-xs text-gray-500"><div className="w-2 h-2 rounded-full bg-primary-500/40" /> Found in resume</div>
-        <div className="flex items-center gap-1.5 text-xs text-gray-500"><div className="w-2 h-2 rounded-full bg-red-500/40" /> Missing / add these</div>
-      </div>
-    </GlassCard>
-  );
-}
-
-//  the above isused to display the ski,ll gapps with help set.has whichg is much faster than array.includes
-
-function InterviewQA({ questions = [] }) {
+/* ── Question accordion (shared for technical + behavioral) ── */
+function QAAccordion({ questions = [], label, icon: Icon, accentColor = 'text-primary-400' }) {
   const [openIdx, setOpenIdx] = useState(null);
+
   return (
     <GlassCard>
-      <h3 className="font-display font-semibold text-white text-sm mb-4 flex items-center gap-2">
-        <MessageSquare size={14} className="text-accent-500" /> Interview Questions & Model Answers
+      <h3 className={`font-display font-semibold text-white text-sm mb-4 flex items-center gap-2`}>
+        <Icon size={14} className={accentColor} />
+        {label}
+        <span className="ml-auto text-xs text-gray-600 font-normal font-mono">{questions.length} questions</span>
       </h3>
-      <div className="space-y-2">
-        {questions.map((item, i) => (
-          <div key={i} className="border border-white/5 rounded-xl overflow-hidden">
-            <button onClick={() => setOpenIdx(openIdx === i ? null : i)} className="w-full flex items-start justify-between px-4 py-3 text-left hover:bg-white/3 transition-colors gap-3">
-              <div className="flex items-start gap-2.5">
-                <span className="text-xs font-mono text-primary-400 mt-0.5 shrink-0">Q{i + 1}</span>
-                <span className="text-sm text-gray-300 leading-snug">{item.q || item.question}</span>
-              </div>
-              <motion.div animate={{ rotate: openIdx === i ? 180 : 0 }} transition={{ duration: 0.2 }} className="shrink-0 mt-0.5">
-                <ChevronDown size={15} className="text-gray-600" />
-              </motion.div>
-            </button>
-            {openIdx === i && (
-              <motion.div variants={accordionContent} initial="hidden" animate="visible" exit="exit" className="overflow-hidden">
-                <div className="px-4 pb-4 pt-3 border-t border-white/5">
-                  <p className="text-xs font-medium text-accent-500 mb-1.5">Model Answer</p>
-                  <p className="text-sm text-gray-400 leading-relaxed">{item.a || item.answer}</p>
+
+      {!questions.length ? (
+        <p className="text-xs text-gray-600">No questions generated.</p>
+      ) : (
+        <div className="space-y-2">
+          {questions.map((item, i) => (
+            <div key={i} className="border border-white/5 rounded-xl overflow-hidden">
+              <button
+                onClick={() => setOpenIdx(openIdx === i ? null : i)}
+                className="w-full flex items-start justify-between px-4 py-3 text-left hover:bg-white/3 transition-colors gap-3"
+              >
+                <div className="flex items-start gap-2.5">
+                  <span className={`text-xs font-mono ${accentColor} mt-0.5 shrink-0`}>Q{i + 1}</span>
+                  <span className="text-sm text-gray-300 leading-snug">
+                    {item.question}
+                  </span>
                 </div>
-              </motion.div>
-            )}
-          </div>
-        ))}
-        {!questions.length && <p className="text-xs text-gray-600">No interview questions generated.</p>}
-      </div>
+                <motion.div
+                  animate={{ rotate: openIdx === i ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="shrink-0 mt-0.5"
+                >
+                  <ChevronDown size={15} className="text-gray-600" />
+                </motion.div>
+              </button>
+
+              {openIdx === i && (
+                <motion.div
+                  variants={accordionContent}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 pb-4 border-t border-white/5">
+                    {/* Intention chip */}
+                    {item.intention && (
+                      <div className="pt-3 pb-2">
+                        <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                          Interviewer's intent
+                        </span>
+                        <p className="text-xs text-gray-400 mt-1 leading-relaxed italic">
+                          {item.intention}
+                        </p>
+                      </div>
+                    )}
+                    {/* Model answer */}
+                    {item.answer && (
+                      <div className="pt-2">
+                        <span className={`text-xs font-medium ${accentColor}`}>How to answer</span>
+                        <p className="text-sm text-gray-300 leading-relaxed mt-1">{item.answer}</p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </GlassCard>
   );
 }
 
+/* ── PDF download button ── */
+function PDFDownload({ reportId }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleDownload = async () => {
+    if (!reportId) return;
+    setLoading(true);
+    try {
+      const blob = await resumeService.downloadResumePdf(reportId);
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = `resume_${reportId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+      Toast.success('Resume PDF downloaded!');
+    } catch {
+      Toast.error('Failed to generate PDF. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Button variant="secondary" size="sm" loading={loading} onClick={handleDownload}>
+      <Download size={14} /> Download ATS Resume PDF
+    </Button>
+  );
+}
+
+/* ── Root export ── */
 export default function AnalysisResults({ result }) {
   if (!result) return null;
 
   const {
-    atsScore = 0,
-    jobReadinessScore = 0,
-    strengths = [],
-    weaknesses = [],
-    suggestions = [],
-    skillGap = {},
-    keywords = [],
-    interviewQuestions = [],
+    _id,
+    title             = '',
+    matchScore        = 0,
+    technicalQuestions  = [],
+    behavioralQuestions = [],
+    skillGaps           = [],
+    preparationPlan     = [],
   } = result;
 
   return (
-    <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-5 mt-8">
-      <motion.div variants={staggerItem} className="grid sm:grid-cols-2 gap-5">
-        <ATSScoreCard score={atsScore} label="ATS Score" />
-        <ATSScoreCard score={jobReadinessScore} label="Job Readiness" />
+    <motion.div
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
+      className="space-y-5 mt-8"
+    >
+      {/* Job title + PDF download */}
+      <motion.div variants={staggerItem} className="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          {title && (
+            <>
+              <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Analysis for</p>
+              <h2 className="font-display text-xl font-bold text-white">{title}</h2>
+            </>
+          )}
+        </div>
+        {_id && <PDFDownload reportId={_id} />}
       </motion.div>
 
+      {/* Match score — single score, full width */}
       <motion.div variants={staggerItem}>
-        <StrengthsWeaknesses strengths={strengths} weaknesses={weaknesses} />
+        <GlassCard className="flex flex-col items-center py-8">
+          <ATSScoreCard score={matchScore} label="Match Score" />
+          <p className="text-xs text-gray-500 mt-3 text-center">
+            How well your resume matches the target job description
+          </p>
+        </GlassCard>
       </motion.div>
 
+      {/* Skill Gaps */}
       <motion.div variants={staggerItem}>
-        <SkillGap skillGap={skillGap} />
+        <SkillGap skillGaps={skillGaps} />
       </motion.div>
 
+      {/* Technical Questions */}
       <motion.div variants={staggerItem}>
-        <Suggestions suggestions={suggestions} />
+        <QAAccordion
+          questions={technicalQuestions}
+          label="Technical Interview Questions"
+          icon={Brain}
+          accentColor="text-primary-400"
+        />
       </motion.div>
 
+      {/* Behavioral Questions */}
       <motion.div variants={staggerItem}>
-        <Keywords keywords={keywords} skillGap={skillGap} />
+        <QAAccordion
+          questions={behavioralQuestions}
+          label="Behavioural Interview Questions"
+          icon={MessageCircle}
+          accentColor="text-accent-500"
+        />
       </motion.div>
 
+      {/* Preparation Plan */}
       <motion.div variants={staggerItem}>
-        <InterviewQA questions={interviewQuestions} />
+        <Suggestions preparationPlan={preparationPlan} />
       </motion.div>
     </motion.div>
   );

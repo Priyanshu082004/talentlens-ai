@@ -1,13 +1,29 @@
+import { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCurrentUser } from '@redux/slices/authSlice.js';
+import LoadingScreen from '@components/shared/LoadingScreen/LoadingScreen.jsx';
 import { ROUTES } from '@constants/routes.js';
 
-/**
- * Guards routes that require authentication (dashboard and children).
- * If not logged in, redirect to login.
- */
+
 export default function ProtectedRoutes() {
-  const { isAuthenticated, token } = useSelector((s) => s.auth);
-  if (!isAuthenticated && !token) return <Navigate to={ROUTES.LOGIN} replace />;
-  return <Outlet />;
+  const dispatch = useDispatch();
+  const { isAuthenticated, isLoading, user } = useSelector((s) => s.auth);
+
+  useEffect(() => {
+    // Only fetch if we don't yet have user data (first load / page refresh)
+    if (!user && !isLoading) {
+      dispatch(fetchCurrentUser());
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // While verifying the cookie
+  if (isLoading) return <LoadingScreen />;
+
+  // Verified — user exists in Redux
+  if (isAuthenticated) return <Outlet />;
+
+  // Not authenticated
+  return <Navigate to={ROUTES.LOGIN} replace />;
 }
