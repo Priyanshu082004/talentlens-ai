@@ -9,7 +9,7 @@ import Suggestions from './Suggestions.jsx';
 import { staggerContainer, staggerItem, accordionContent } from '@animations/framerVariants.js';
 import resumeService from '@services/resumeService.js';
 import Button from '@components/ui/Button/Button.jsx';
-import Toast from '@components/ui/Toast/Toast.jsx';
+import {Toast} from '@components/ui/Toast/Toast.jsx';
 
 /**
  * AnalysisResults
