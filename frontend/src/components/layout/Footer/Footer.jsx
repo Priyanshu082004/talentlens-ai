@@ -22,7 +22,7 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
                 <Zap size={16} className="text-white" />
               </div>
-              <span className="font-display font-bold text-white text-lg">ResumeAI</span>
+              <span className="font-display font-bold text-white text-lg">TalentLensAI</span>
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
               AI-powered resume analysis that helps you land the job. Powered by Google Gemini Flash 2.5.

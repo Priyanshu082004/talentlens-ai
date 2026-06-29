@@ -8,7 +8,7 @@ const FAQS = [
   { q: 'Is my resume data stored?', a: 'Your resume text is processed by Google Gemini for analysis. We store the analysis results in your history so you can compare across iterations. You can delete any analysis from your history at any time.' },
   { q: 'Which AI model powers the analysis?', a: 'Google Gemini Flash 2.5 — one of the fastest and most capable multimodal models available. It reads your entire resume in context, not just keywords, which is why the suggestions are specific rather than generic.' },
   { q: 'How long does an analysis take?', a: 'Typically 15–30 seconds from upload to full results. This includes PDF parsing, Gemini processing, and structuring the output into the dashboard sections.' },
-  { q: 'Can I analyze the same resume multiple times?', a: 'Yes. In fact, that is how most people use it — upload, read suggestions, improve your resume, upload again, and watch the score increase. Your history section tracks all your previous analyses.' },
+  { q: 'Can I analyze the same resume multiple times?', a: 'Yes. In fact, that is how most people use it — upload, read suggestions, improve your resume, upload again, and watch the score increase. Your history section tracks all your previous analysis.' },
 ];
 
 function FAQItem({ item, isOpen, onToggle }) {

@@ -48,7 +48,7 @@ export default function Login() {
             <div className="w-9 h-9 rounded-xl bg-gradient-hero flex items-center justify-center">
               <Zap size={18} className="text-white" />
             </div>
-            <span className="font-display font-bold text-white text-xl">ResumeAI</span>
+            <span className="font-display font-bold text-white text-xl">TalentLensAI</span>
           </Link>
         </motion.div>
 

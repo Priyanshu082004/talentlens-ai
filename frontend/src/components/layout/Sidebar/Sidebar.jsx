@@ -41,7 +41,7 @@ export default function Sidebar() {
           </div>
           {!sidebarCollapsed && (
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-display font-bold text-white text-base whitespace-nowrap">
-              ResumeAI
+              TalentLensAI
             </motion.span>
           )}
         </Link>

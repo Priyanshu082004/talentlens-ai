@@ -126,7 +126,7 @@ export default {
   daisyui: {
     themes: [
       {
-        resumeai: {
+        TalentLensAI: {
           primary: "#6366F1",
           secondary: "#7C3AED",
           accent: "#06B6D4",
@@ -144,7 +144,7 @@ export default {
       },
     ],
 
-    darkTheme: "resumeai",
+    darkTheme: "TalentLensAI",
 
     base: true,
     styled: true,

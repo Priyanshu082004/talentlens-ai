@@ -43,7 +43,7 @@ export default function Navbar() {
           <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
             <Zap size={16} className="text-white" />
           </div>
-          <span className="font-display font-bold text-white text-lg">ResumeAI</span>
+          <span className="font-display font-bold text-white text-lg">TalentLensAI</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">

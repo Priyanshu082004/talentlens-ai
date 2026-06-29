@@ -49,7 +49,7 @@ export default function AnalysisHistory() {
     <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 max-w-4xl">
       <motion.div variants={staggerItem}>
         <h1 className="font-display text-2xl font-bold text-white mb-1">Analysis History</h1>
-        <p className="text-sm text-gray-500">All your previous interview report analyses.</p>
+        <p className="text-sm text-gray-500">All your previous interview report analysis.</p>
       </motion.div>
 
       <motion.div variants={staggerItem} className="flex gap-3 flex-wrap">
@@ -81,7 +81,7 @@ export default function AnalysisHistory() {
           <GlassCard className="text-center py-12">
             <FileText size={32} className="text-gray-700 mx-auto mb-3" />
             <p className="text-gray-500 text-sm">
-              {query ? 'No reports match your search.' : 'No analyses yet. Upload your first resume to get started.'}
+              {query ? 'No reports match your search.' : 'No analysis yet. Upload your first resume to get started.'}
             </p>
           </GlassCard>
         </motion.div>

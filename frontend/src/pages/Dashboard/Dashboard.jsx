@@ -85,7 +85,7 @@ export default function Dashboard() {
       {/* Stats */}
       <motion.div variants={staggerItem} className="grid sm:grid-cols-3 gap-5">
         <StatCard
-          label="Total analyses"
+          label="Total analysis"
           value={history.length}
           icon={FileText}
           color="#6366F1"
@@ -166,7 +166,7 @@ export default function Dashboard() {
       {!analysisResult && history.length > 0 && (
         <motion.div variants={staggerItem}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display font-bold text-white text-lg">Recent analyses</h2>
+            <h2 className="font-display font-bold text-white text-lg">Recent analysis</h2>
             <button
               onClick={() => navigate(ROUTES.HISTORY)}
               className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1"
@@ -212,7 +212,7 @@ export default function Dashboard() {
           <GlassCard className="text-center py-10">
             <FileText size={32} className="text-gray-700 mx-auto mb-3" />
             <p className="text-gray-500 text-sm">
-              No analyses yet. Fill in the form above and upload your resume to get started.
+              No analysis yet. Fill in the form above and upload your resume to get started.
             </p>
           </GlassCard>
         </motion.div>

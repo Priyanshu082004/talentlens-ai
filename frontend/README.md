@@ -437,7 +437,7 @@ deleteAnalysis(id)        → DELETE /api/resume/:id
 ```
 
 **Hero headline:** "Your resume gets 7 seconds. Make them count."  
-**Sub-headline:** "ResumeAI uses Gemini to analyze, score, and rewrite your resume the way a senior recruiter would — in 30 seconds."
+**Sub-headline:** "TalentLensAI uses Gemini to analyze, score, and rewrite your resume the way a senior recruiter would — in 30 seconds."
 
 ---
 
@@ -997,7 +997,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 ```
 # .env
 VITE_API_URL=http://localhost:3000/api
-VITE_APP_NAME=ResumeAI
+VITE_APP_NAME=TalentLensAI
 VITE_APP_VERSION=1.0.0
 ```
 
@@ -1156,7 +1156,7 @@ export default {
   daisyui: {
     themes: [
       {
-        resumeai: {
+        TalentLensAI: {
           primary:   '#6366F1',
           secondary: '#7C3AED',
           accent:    '#06B6D4',
@@ -1171,7 +1171,7 @@ export default {
         },
       },
     ],
-    darkTheme: 'resumeai',
+    darkTheme: 'TalentLensAI',
     base: true,
     styled: true,
     utils: true,
@@ -1367,7 +1367,7 @@ export const COPY = {
   HERO: {
     EYEBROW:   'Powered by Google Gemini Flash 2.5',
     HEADLINE:  'Your resume gets 7 seconds.\nMake them count.',
-    SUB:       'ResumeAI analyzes, scores, and rewrites your resume the way a senior recruiter would — in 30 seconds.',
+    SUB:       'TalentLensAI analyzes, scores, and rewrites your resume the way a senior recruiter would — in 30 seconds.',
     CTA_PRIMARY:  'Analyze My Resume',
     CTA_SECONDARY:'See How It Works',
   },

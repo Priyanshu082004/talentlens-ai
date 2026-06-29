@@ -1,6 +1,6 @@
 export const COPY = {
   BRAND: {
-    NAME:    'ResumeAI',
+    NAME:    'TalentLensAI',
     TAGLINE: 'Get Hired Faster',
     POWERED: 'Powered by Google Gemini Flash 2.5',
   },
@@ -10,7 +10,7 @@ export const COPY = {
     HEADLINE_1:    'Your resume gets',
     HEADLINE_GRAD: '7 seconds.',
     HEADLINE_2:    'Make them count.',
-    SUB:           'ResumeAI analyzes, scores, and rewrites your resume the way a senior recruiter would — in 30 seconds.',
+    SUB:           'TalentLensAI analyzes, scores, and rewrites your resume the way a senior recruiter would — in 30 seconds.',
     CTA_PRIMARY:   'Analyze My Resume Free',
     CTA_SECONDARY: 'See How It Works',
     TRUST_NOTE:    'No credit card · PDF upload · Results in 30s',

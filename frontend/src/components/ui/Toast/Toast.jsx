@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 import { CheckCircle, XCircle, Info, AlertTriangle } from 'lucide-react';
 
 /**
- * Thin wrapper around react-hot-toast with ResumeAI-branded icons.
+ * Thin wrapper around react-hot-toast with TalentLensAI-branded icons.
  * The global <Toaster /> styling lives in main.jsx; this module
  * just exposes consistent helper functions to call from anywhere.
  */
