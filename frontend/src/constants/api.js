@@ -16,4 +16,9 @@ export const API = {
     // POST /interview/:id/resume → PDF binary blob
     PDF:     (id) => `/interview/${id}/resume`,
   },
+  PROFILE: {
+    UPLOAD_AVATAR: "/profile/avatar",
+    DELETE_AVATAR: "/profile/avatar",
+    DELETE_ACCOUNT: "/profile",
+},
 };

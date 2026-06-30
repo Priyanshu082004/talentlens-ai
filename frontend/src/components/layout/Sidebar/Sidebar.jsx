@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  LayoutDashboard, FileText, History,
-  User, Settings, ChevronLeft, ChevronRight, Zap, LogOut,
+  LayoutDashboard,  History,
+  User,  ChevronLeft, ChevronRight, Zap, LogOut,
 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '@redux/slices/uiSlice.js';
@@ -13,10 +13,8 @@ import clsx from 'clsx';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', icon: LayoutDashboard, path: ROUTES.DASHBOARD },
-  { label: 'Analysis',  icon: FileText,        path: ROUTES.ANALYSIS },
   { label: 'History',   icon: History,         path: ROUTES.HISTORY },
   { label: 'Profile',   icon: User,            path: ROUTES.PROFILE },
-  { label: 'Settings',  icon: Settings,        path: ROUTES.SETTINGS },
 ];
 
 export default function Sidebar() {

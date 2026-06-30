@@ -40,13 +40,15 @@ export default function AnalysisHistory() {
         : new Date(a.createdAt) - new Date(b.createdAt)
     );
 
-  const handleOpen = (id) => {
-    dispatch(fetchReportById(id));
-    navigate(ROUTES.ANALYSIS);
-  };
+const handleOpen = async (id) => {
+  const result = await dispatch(fetchReportById(id));
 
+  if (!result.error) {
+    navigate(ROUTES.ANALYSIS);
+  }
+};
   return (
-    <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-6 max-w-4xl">
+    <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-full max-w-7xl mx-auto space-y-8">
       <motion.div variants={staggerItem}>
         <h1 className="font-display text-2xl font-bold text-white mb-1">Analysis History</h1>
         <p className="text-sm text-gray-500">All your previous interview report analysis.</p>

@@ -8,13 +8,14 @@ import ProtectedRoutes from './ProtectedRoutes.jsx';
 import LoadingScreen   from '@components/shared/LoadingScreen/LoadingScreen.jsx';
 import { ROUTES } from '@constants/routes.js';
 
+
 //  Lazy load all route components for better performance and code splitting
 const Landing         = lazy(() => import('@pages/Landing/Landing'));
 const Login           = lazy(() => import('@pages/Auth/Login/Login'));
 const Signup           = lazy(() => import('@pages/Auth/Signup/Signup'));
 const Dashboard        = lazy(() => import('@pages/Dashboard/Dashboard'));
-const ResumeAnalysis   = lazy(() => import('@pages/Dashboard/sections/ResumeUpload'));
 const AnalysisHistory  = lazy(() => import('@pages/Dashboard/sections/AnalysisHistory'));
+const Profile = lazy(() => import("@pages/Profile/Profile"));
 
 function NotFound() {
   return (
@@ -47,8 +48,8 @@ export default function AppRoutes() {
         <Route element={<ProtectedRoutes />}>
           <Route element={<DashboardLayout />}>
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-            <Route path={ROUTES.ANALYSIS}  element={<ResumeAnalysis />} />
             <Route path={ROUTES.HISTORY}   element={<AnalysisHistory />} />
+              <Route  path={ROUTES.PROFILE} element={<Profile />}/>
           </Route>
         </Route>
 

@@ -65,7 +65,7 @@ export default function Dashboard() {
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
-      className={`${styles.dashboard} space-y-8 max-w-4xl`}
+      className={`${styles.dashboard} space-y-8 max-w-[1500px] mx-auto`}
     >
       {/* Header */}
       <motion.div variants={staggerItem} className="flex items-center justify-between flex-wrap gap-3">
