@@ -9,10 +9,10 @@ import cors from "cors";
 
 import authRouter from "./routes/auth.routes.js";
 import interviewRouter from "./routes/interview.routes.js";
+import profileRouter from "./routes/profile.routes.js";
 
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 console.log("CLIENT_URL =", process.env.CLIENT_URL);
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/interview", interviewRouter);
-
+app.use("/api/profile", profileRouter);
 
 console.log("Registering auth routes...");
 export default app;
