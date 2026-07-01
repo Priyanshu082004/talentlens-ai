@@ -68,11 +68,7 @@ const resumeSlice = createSlice({
       state.jobDescription   = '';
     },
     clearError:          (state) => { state.error = null; },
-
-
-
-  //major bug of data bleeding into another user profile 
-    resetResume: () => INITIAL_STATE,
+    resetResume:        () => INITIAL_STATE,
   },
   extraReducers: (b) => {
     b
@@ -90,6 +86,7 @@ const resumeSlice = createSlice({
         state.currentStep    = 4;
         // payload = { message, interviewReport }
         state.analysisResult = payload.interviewReport;
+        state.history = [payload.interviewReport, ...state.history.filter((item) => item?._id !== payload.interviewReport?._id)];
       })
       .addCase(uploadAndAnalyze.rejected, (state, { payload }) => {
         state.isAnalyzing = false;
@@ -121,7 +118,7 @@ export const {
   setJobDescription,
   clearAnalysis,
   clearError,
-  resetResume
+  resetResume,
 } = resumeSlice.actions;
 
 export default resumeSlice.reducer;

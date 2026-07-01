@@ -7,7 +7,6 @@ export const loginUser = createAsyncThunk(
   async (credentials, { dispatch, rejectWithValue }) => {
     try {
       const data = await authService.login(credentials);
-      // Clear previous user's resume data BEFORE new user state is set
       dispatch(resetResume());
       return data;
     } catch (err) {
@@ -21,7 +20,6 @@ export const registerUser = createAsyncThunk(
   async (userData, { dispatch, rejectWithValue }) => {
     try {
       const data = await authService.register(userData);
-      // Clear previous user's resume data BEFORE new user state is set
       dispatch(resetResume());
       return data;
     } catch (err) {
@@ -32,9 +30,12 @@ export const registerUser = createAsyncThunk(
 
 export const fetchCurrentUser = createAsyncThunk(
   'auth/me',
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try { return await authService.me(); }
-    catch (err) { return rejectWithValue(err.response?.data?.message); }
+    catch (err) {
+      dispatch(resetResume());
+      return rejectWithValue(err.response?.data?.message);
+    }
   }
 );
 
@@ -43,10 +44,10 @@ export const logoutUser = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const data = await authService.logout();
-      dispatch(resetResume()); // clear on successful logout
+      dispatch(resetResume());
       return data;
     } catch (err) {
-      dispatch(resetResume()); // clear even if server call fails
+      dispatch(resetResume());
       return rejectWithValue(err.response?.data?.message);
     }
   }
@@ -109,5 +110,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearError, clearAuth } = authSlice.actions;
+export const { clearError, clearAuth ,updateUser } = authSlice.actions;
 export default authSlice.reducer;

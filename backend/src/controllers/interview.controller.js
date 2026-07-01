@@ -109,6 +109,83 @@ import interviewReportModel from "../models/interviewReport.model.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 
+const getAuthenticatedUserId = (req) => req.user?._id || req.user?.id;
+
+const getScopedReportsForUser = async (userId) => {
+  const ownedReports = await interviewReportModel
+    .find({ user: userId })
+    .sort({ createdAt: -1 })
+    .select(
+      "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan"
+    );
+
+  if (ownedReports.length > 0) {
+    return ownedReports;
+  }
+
+  const legacyReports = await interviewReportModel
+    .find({
+      $or: [{ user: { $exists: false } }, { user: null }],
+    })
+    .sort({ createdAt: -1 })
+    .select(
+      "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan"
+    );
+
+  if (legacyReports.length === 0) {
+    return [];
+  }
+
+  const hasAnyOwnedReports = await interviewReportModel.exists({
+    user: { $ne: null, $exists: true },
+  });
+
+  if (hasAnyOwnedReports) {
+    return [];
+  }
+
+  await interviewReportModel.updateMany(
+    {
+      _id: { $in: legacyReports.map((report) => report._id) },
+    },
+    { $set: { user: userId } }
+  );
+
+  return legacyReports.map((report) => ({ ...report.toObject(), user: userId }));
+};
+
+const getLegacyReportForUser = async (interviewId, userId) => {
+  const ownedReport = await interviewReportModel.findOne({
+    _id: interviewId,
+    user: userId,
+  });
+
+  if (ownedReport) {
+    return ownedReport;
+  }
+
+  const legacyReport = await interviewReportModel.findOne({
+    _id: interviewId,
+    $or: [{ user: { $exists: false } }, { user: null }],
+  });
+
+  if (!legacyReport) {
+    return null;
+  }
+
+  const hasAnyOwnedReports = await interviewReportModel.exists({
+    user: { $ne: null, $exists: true },
+  });
+
+  if (hasAnyOwnedReports) {
+    return null;
+  }
+
+  await interviewReportModel.findByIdAndUpdate(interviewId, { user: userId });
+
+  return interviewReportModel.findById(interviewId);
+};
+
 /**
  * ---------------------------------------------------------
  * Generate Interview Report
@@ -127,13 +204,15 @@ export const generateInterViewReportController = asyncHandler(async (req, res) =
     selfDescription,
     jobDescription,
   });
-
+  
   console.log("========== AI RESPONSE ==========");
   console.dir(interViewReportByAi, { depth: null });
   console.log("================================");
 
+  const userId = getAuthenticatedUserId(req);
+
   const interviewReport = await interviewReportModel.create({
-    user: req.user.id,
+    user: userId,
     resume: resumeContent.text,
     selfDescription,
     jobDescription,
@@ -159,11 +238,9 @@ export const generateInterViewReportController = asyncHandler(async (req, res) =
 export const getInterviewReportByIdController = asyncHandler(async (req, res) => {
 
   const { interviewId } = req.params;
+  const userId = getAuthenticatedUserId(req);
 
-  const interviewReport = await interviewReportModel.findOne({
-    _id: interviewId,
-    user: req.user.id,
-  });
+  const interviewReport = await getLegacyReportForUser(interviewId, userId);
 
   if (!interviewReport) {
     throw new ApiError(404, "Interview report not found.");
@@ -183,13 +260,9 @@ export const getInterviewReportByIdController = asyncHandler(async (req, res) =>
  */
 export const getAllInterviewReportsController = asyncHandler(async (req, res) => {
 
-  const interviewReports = await interviewReportModel.find({
-    user: req.user.id,
-  })
-    .sort({ createdAt: -1 })
-    .select(
-      "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan"
-    );
+  const userId = getAuthenticatedUserId(req);
+
+  const interviewReports = await getScopedReportsForUser(userId);
 
   res.status(200).json({
     message: "Interview reports fetched successfully.",
@@ -206,12 +279,13 @@ export const getAllInterviewReportsController = asyncHandler(async (req, res) =>
 export const generateResumePdfController = asyncHandler(async (req, res) => {
 
   const { interviewId } = req.params;
+  const userId = getAuthenticatedUserId(req);
 
   console.log("========== PDF REQUEST ==========");
   console.log("Params:", req.params);
   console.log("Interview ID:", interviewId);
 
-  const interviewReport = await interviewReportModel.findById(interviewId);
+  const interviewReport = await getLegacyReportForUser(interviewId, userId);
 
   console.log("Interview Report Found:", !!interviewReport);
 

@@ -6,6 +6,10 @@ import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import puppeteer from "puppeteer";
+import { retryGemini } from "../utils/retry.js";
+
+
+
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
@@ -85,14 +89,15 @@ async function generateStructuredResponse({
 }) {
 
     try {
-        const response = await ai.models.generateContent({
+        const response = await  retryGemini(() => ai.models.generateContent({
             model,
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
                 // responseSchema: zodToJsonSchema(schema)
             }
-        });
+        })
+     );
         const parsed = parseGeminiJson(response.text);
         // Validate BEFORE returning.
         console.log("========== PARSED JSON ==========");

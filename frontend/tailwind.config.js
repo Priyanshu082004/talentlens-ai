@@ -36,11 +36,11 @@ export default {
           500: "#06B6D4",
         },
 
-        bg: {
-          base: "#050816",
-          surface: "#0F172A",
-          elevated: "#111827",
-        },
+       bg: {
+            base: "#050505",        
+            surface: "#0F0F10",     
+            elevated: "#171717",   
+           },
       },
 
       backgroundImage: {
@@ -48,10 +48,10 @@ export default {
           "linear-gradient(135deg, #6366F1 0%, #7C3AED 50%, #06B6D4 100%)",
 
         "gradient-card":
-          "linear-gradient(145deg, rgba(99,102,241,0.08), rgba(124,58,237,0.04))",
+          "linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015)))",
 
         "gradient-shimmer":
-          "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%)",
+          "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)",
       },
 
       backdropBlur: {
@@ -59,8 +59,8 @@ export default {
       },
 
       boxShadow: {
-        glow: "0 0 40px rgba(99,102,241,0.2)",
-        "glow-lg": "0 0 80px rgba(99,102,241,0.3)",
+        glow:"0 0 20px rgba(99,102,241,0.12)",
+       "glow-lg":"0 0 50px rgba(99,102,241,0.18)",
         glass: "0 8px 32px rgba(0,0,0,0.4)",
       },
 

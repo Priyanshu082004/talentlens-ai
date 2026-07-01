@@ -14,14 +14,11 @@ const resumeService = {
   async analyzeResume(file, selfDescription, jobDescription, onProgress) {
     const formData = new FormData();
 
-    formData.append("resume", file);
+    formData.append("resume", file, file?.name || "resume.pdf");
     formData.append("selfDescription", selfDescription || "");
     formData.append("jobDescription", jobDescription || "");
 
     const { data } = await api.post(API.INTERVIEW.CREATE, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
       onUploadProgress: (event) => {
         if (onProgress && event.total) {
           const progress = Math.round((event.loaded * 100) / event.total);

@@ -2,7 +2,7 @@ import { User } from "../models/user.model.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import interviewReportModel from "../models/interviewReport.model.js";
-import { uploadImageToCloudinary, deleteImageFromCloudinary,} from "../utils/cloudinary.util.js";
+import { uploadImageToCloudinary, deleteImageFromCloudinary,} from "../utils/cloudinary.js";
 
 export const uploadAvatarController = asyncHandler(async (req, res) => {
   if (!req.file) {
