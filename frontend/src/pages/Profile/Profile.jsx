@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useSelector  } from "react-redux";
+import { useEffect } from "react";
 import ProfileHeader from "@pages/Profile/sections/ProfileHeader.jsx";
 import AvatarCard from "@pages/Profile/sections/AvatarCard.jsx";
 import AccountInfoCard from "@pages/Profile/sections/AccountInfoCard.jsx";
@@ -8,7 +9,10 @@ import {staggerContainer,staggerItem,} from "@animations/framerVariants.js";
 import styles from "./Profile.module.css";
 
 export default function Profile() {
+    
   const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!user) return;}, [user]);
   return (
     <motion.div
       variants={staggerContainer}

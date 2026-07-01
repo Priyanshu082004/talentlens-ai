@@ -35,23 +35,22 @@ export const fetchReportById = createAsyncThunk(
   }
 );
 
-// No delete endpoint exists in the backend — noted in integration checklist.
+const INITIAL_STATE = {
+  uploadedFile:     null,
+  uploadProgress:   0,
+  isAnalyzing:      false,
+  analysisResult:   null,
+  history:          [],
+  isLoadingHistory: false,
+  error:            null,
+  currentStep:      0,
+  selfDescription:  '',
+  jobDescription:   '',
+};
 
 const resumeSlice = createSlice({
   name: 'resume',
-  initialState: {
-    uploadedFile:      null,
-    uploadProgress:    0,
-    isAnalyzing:       false,
-    analysisResult:    null,  // full interviewReport object
-    history:           [],    // trimmed interviewReport list
-    isLoadingHistory:  false,
-    error:             null,
-    currentStep:       0,     // 0=idle 1=uploading 2=parsing 3=analyzing 4=done
-    // Store the form values so UI components can read them
-    selfDescription:   '',
-    jobDescription:    '',
-  },
+  initialState: INITIAL_STATE,
   reducers: {
     setUploadProgress:   (state, { payload }) => {
       state.uploadProgress = payload;
@@ -69,6 +68,11 @@ const resumeSlice = createSlice({
       state.jobDescription   = '';
     },
     clearError:          (state) => { state.error = null; },
+
+
+
+  //major bug of data bleeding into another user profile 
+    resetResume: () => INITIAL_STATE,
   },
   extraReducers: (b) => {
     b
@@ -117,6 +121,7 @@ export const {
   setJobDescription,
   clearAnalysis,
   clearError,
+  resetResume
 } = resumeSlice.actions;
 
 export default resumeSlice.reducer;

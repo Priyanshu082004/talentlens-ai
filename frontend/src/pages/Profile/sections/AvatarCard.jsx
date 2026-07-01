@@ -1,42 +1,59 @@
-import { useRef, useState } from "react";
-
-import {Upload,Trash2,RefreshCcw,Camera,} from "lucide-react";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {Upload, Trash2, RefreshCcw, Camera,} from "lucide-react";
 import GlassCard from "@components/ui/GlassCard/GlassCard.jsx";
 import Button from "@components/ui/Button/Button.jsx";
 import { Toast } from "@components/ui/Toast/Toast.jsx";
 import AvatarPreview from "@pages/Profile/sections/AvatarPreview.jsx";
-
-export default function AvatarCard({ user }) {
+import useAvatarUpload from "@hooks/useAvatarUpload.js";
+import profileService from "@services/profileService.js";
+import { updateUser } from "@redux/slices/authSlice.js";
+export default function AvatarCard() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const inputRef = useRef(null);
-  const [preview, setPreview] = useState(user?.avatar || "");
-  const handleSelect = (e) => {
+  const {
+    preview,
+    uploading,
+    progress,
+    selectImage,
+    uploadImage,
+    removePreview,
+  } = useAvatarUpload();
+  const handleSelect = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      Toast.error("Please select an image.");
-      return;
+    selectImage(file);
+    const response = await uploadImage(file);
+    if (response?.user) {
+      dispatch(updateUser(response.user));
     }
-    if (file.size > 5 * 1024 * 1024) {
-      Toast.error("Maximum image size is 5 MB.");
-      return;
-    }
-  const url = URL.createObjectURL(file);
- setPreview(url);
-    Toast.success("Image selected.");
-  };
-  const handleRemove = () => {
-    setPreview("");
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    Toast.success("Image removed.");
   };
-
+  const handleRemove = async () => {
+    try {
+      const response = await profileService.deleteAvatar();
+      dispatch(updateUser(response.user));
+      removePreview();
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
+      Toast.success("Avatar removed successfully.");
+    }
+    catch (error) {
+      Toast.error(
+        error?.response?.data?.message ||
+        "Failed to remove avatar."
+      );
+    }
+  };
   return (
     <GlassCard>
       <div className="flex flex-col items-center">
         <AvatarPreview
-          avatar={preview}
+          avatar={preview || user?.avatar}
           fullName={user?.fullName}
         />
         <h2 className="mt-6 text-xl font-bold text-white">
@@ -52,14 +69,16 @@ export default function AvatarCard({ user }) {
           accept="image/*"
           onChange={handleSelect}
         />
-      <div className="grid grid-cols-1 gap-3 mt-8 w-full">
+        <div className="grid grid-cols-1 gap-3 mt-8 w-full">
           <Button
+            loading={uploading}
             onClick={() => inputRef.current?.click()}
           >
             <Upload size={16} />
             Upload Photo
           </Button>
           <Button
+            loading={uploading}
             variant="secondary"
             onClick={() => inputRef.current?.click()}
           >
@@ -69,37 +88,36 @@ export default function AvatarCard({ user }) {
           <Button
             variant="ghost"
             onClick={handleRemove}
-            className="
-              text-red-400
-              hover:bg-red-500/10
-            "
+            className="text-red-400 hover:bg-red-500/10"
           >
             <Trash2 size={16} />
             Remove Photo
           </Button>
         </div>
-        <div
-          className="
-            mt-8
-            rounded-xl
-            border
-            border-primary-500/20
-            bg-primary-500/5
-            p-4
-            w-full
-          "
-        >
+        {uploading && (
+          <div className="mt-5 w-full">
+            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+              <div
+                className="h-full bg-primary-500 transition-all"
+                style={{
+                  width: `${progress}%`,
+                }}
+              />
+            </div>
+            <p className="mt-2 text-xs text-gray-500 text-center">
+              Uploading... {progress}%
+            </p>
+          </div>
+        )}
+        <div className=" mt-8 rounded-xl  border border-primary-500/20 bg-primary-500/5p-4w-full  " >
           <div className="flex gap-3">
-            <Camera
-              className="text-primary-400 shrink-0 mt-1"
-              size={18}
-            />
+            <Camera className="text-primary-400 shrink-0 mt-1" size={18} />
             <p className="text-sm leading-7 text-gray-400">
               Supported formats:
               JPG, PNG and WEBP.
               <br />
               Maximum upload size:
-              <strong className="text-white">
+              <strong className="text-white">         
                 {" "}5 MB
               </strong>
             </p>
