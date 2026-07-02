@@ -28,20 +28,36 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-react": [
-            "react",
-            "react-dom",
-            "react-router-dom",
-          ],
-          "vendor-redux": [
-            "@reduxjs/toolkit",
-            "react-redux",
-          ],
-          "vendor-motion": ["framer-motion"],
-          "vendor-gsap": ["gsap"],
-          "vendor-axios": ["axios"],
-        },
+       manualChunks(id) {
+  if (id.includes("node_modules")) {
+    if (
+      id.includes("react") ||
+      id.includes("react-dom") ||
+      id.includes("react-router-dom")
+    ) {
+      return "vendor-react";
+    }
+
+    if (
+      id.includes("@reduxjs/toolkit") ||
+      id.includes("react-redux")
+    ) {
+      return "vendor-redux";
+    }
+
+    if (id.includes("framer-motion")) {
+      return "vendor-motion";
+    }
+
+    if (id.includes("gsap")) {
+      return "vendor-gsap";
+    }
+
+    if (id.includes("axios")) {
+      return "vendor-axios";
+    }
+  }
+},
       },
     },
 
