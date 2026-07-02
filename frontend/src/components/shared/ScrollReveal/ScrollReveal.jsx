@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { fadeInUp, fadeInLeft, fadeInRight, scaleIn } from '@animations/framerVariants';
+import { fadeInUp, fadeInLeft, fadeInRight, scaleIn } from '@animations/framerVariants.js';
 
 const VARIANT_MAP = {
   up:    fadeInUp,

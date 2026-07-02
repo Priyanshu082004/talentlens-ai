@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
-import { cardHover } from '@animations/framerVariants';
+import { cardHover } from '@animations/framerVariants.js';
 
 export default function GlassCard({
   children,

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import GlassCard from '@components/ui/GlassCard/GlassCard';
-import Badge from '@components/ui/Badge/Badge';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
+import Badge from '@components/ui/Badge/Badge.jsx';
 import clsx from 'clsx';
 
 const SEVERITY_ORDER = ['high', 'medium', 'low'];

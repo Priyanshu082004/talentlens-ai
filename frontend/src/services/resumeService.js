@@ -1,5 +1,5 @@
 import api from "./api";
-import { API } from "@constants/api";
+import { API } from "@constants/api.js";
 
 
 const resumeService = {

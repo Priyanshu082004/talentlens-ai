@@ -61,7 +61,7 @@ export default {
           "linear-gradient(135deg, #6366F1 0%, #7C3AED 50%, #06B6D4 100%)",
 
         "gradient-card":
-          "linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015)))",
+          "linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015))",
 
         "gradient-shimmer":
           "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)",
