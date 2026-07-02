@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { pageTransition } from '@animations/framerVariants';
+import { pageTransition } from '@animations/framerVariants.js';
 import clsx from 'clsx';
 
 /**

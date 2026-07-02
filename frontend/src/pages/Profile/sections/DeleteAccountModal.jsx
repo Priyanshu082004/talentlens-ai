@@ -43,7 +43,7 @@ export default function DeleteAccountModal({  open, onClose,}) {
     <AnimatePresence>
       {open && (
         <motion.div  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-           className=" fixed inset-0   z-50   bg-black/70   backdrop-blur-sm   flex items-center justify-center p-5">
+           className=" fixed inset-0 z-50 bg-slate-900/30 backdrop-blur-sm flex items-center justify-center p-5">
        <motion.div
             initial={{
               opacity: 0,
@@ -60,27 +60,27 @@ export default function DeleteAccountModal({  open, onClose,}) {
               scale: 0.9,
               y: 20,
             }}
-            className=" bg-bg-surface border border-white/10 rounded-2xl p-8 w-full max-w-lg">
+            className="bg-bg-surface border border-slate-200 rounded-2xl p-8 w-full max-w-lg">
             <div className="flex justify-between items-start">
               <div className="flex gap-4">
-                <div className="  w-12  h-12  rounded-xl  bg-red-500/10  flex items-center justify-center" >
+                <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
                   <AlertTriangle size={22} className="text-red-400" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-2xl font-bold text-slate-900">
                     Delete Account
                   </h2>
-                  <p className="text-sm text-gray-500 mt-2">
+                  <p className="text-sm text-slate-500 mt-2">
                     This action cannot be undone.
                   </p>
                 </div>
               </div>
               <button onClick={handleClose}>
-                <X size={20} className="text-gray-500 hover:text-white transition-colors" />
+                <X size={20} className="text-slate-500 hover:text-slate-900 transition-colors" />
               </button>
             </div>
-            <div className="  mt-8 rounded-xl border border-red-500/20 bg-red-500/5  p-4 " >
-              <p className="text-sm text-gray-300 leading-7">
+            <div className="mt-8 rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+              <p className="text-sm text-slate-600 leading-7">
                 Type
                 <strong className="text-red-400">
                 {" "}DELETE{" "}
@@ -88,8 +88,8 @@ export default function DeleteAccountModal({  open, onClose,}) {
                 below to permanently delete your account.
               </p>
             </div>
-            <input value={text}  onChange={(e) => setText(e.target.value)}placeholder="Type DELETE" 
-            className=" mt-6 w-full rounded-xl border border-white/10 bg-bg-base px-4 py-3 outline-none text-white focus:border-red-400"/>
+            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Type DELETE"
+            className="mt-6 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 outline-none text-slate-900 focus:border-red-400"/>
             <div className="mt-8 flex justify-end gap-3">
               <Button  variant="secondary"   onClick={handleClose} disabled={loading} >
                 Cancel

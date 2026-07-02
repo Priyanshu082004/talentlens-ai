@@ -31,14 +31,14 @@ function FeatureCard({ feature, index }) {
           </div>
 
           <div className="flex items-center gap-2 mb-2">
-            <h3 className="font-display font-semibold text-white text-base">{feature.title}</h3>
+            <h3 className="font-display font-semibold text-slate-900 text-base">{feature.title}</h3>
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
               style={{ background: `${feature.color}15`, color: feature.color, border: `1px solid ${feature.color}25` }}>
               {feature.badge}
             </span>
           </div>
 
-          <p className="text-sm text-gray-400 leading-relaxed">{feature.desc}</p>
+          <p className="text-sm text-slate-600 leading-relaxed">{feature.desc}</p>
         </div>
       </GlassCard>
     </motion.div>
@@ -56,8 +56,8 @@ export default function Features() {
         className="text-center mb-16"
       >
         <span className="text-xs font-semibold text-primary-400 uppercase tracking-widest mb-4 block">Everything you need</span>
-        <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">AI that actually reads your resume</h2>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+        <h2 className="font-display text-4xl lg:text-5xl font-bold text-slate-900 mb-4">AI that actually reads your resume</h2>
+        <p className="text-slate-600 text-lg max-w-2xl mx-auto">
           Not a keyword counter. A full intelligence layer — the same analysis a top recruiter would do, available in seconds.
         </p>
       </motion.div>

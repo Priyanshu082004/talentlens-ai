@@ -25,12 +25,12 @@ export default function ProfileHeader() {
           <motion.h1
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl font-bold text-white"
+            className="font-display text-3xl font-bold text-slate-900"
           >
             My Profile
           </motion.h1>
 
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             Manage your avatar and account settings.
           </p>
         </div>

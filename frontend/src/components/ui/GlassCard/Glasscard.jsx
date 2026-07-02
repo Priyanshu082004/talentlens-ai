@@ -25,14 +25,13 @@ export default function GlassCard({
       className={clsx(
         'glass rounded-2xl relative overflow-hidden',
         padding && 'p-6',
-        glow && 'animate-pulse-glow',
+        glow && 'shadow-glow',
         onClick && 'cursor-pointer',
         className
       )}
       {...motionProps}
       {...props}
     >
-      <div className="absolute inset-0 bg-gradient-card pointer-events-none" />
       <div className="relative z-10">{children}</div>
     </Tag>
   );

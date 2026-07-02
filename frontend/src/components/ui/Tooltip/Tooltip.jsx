@@ -30,7 +30,7 @@ export default function Tooltip({ children, content, position = 'top', className
             transition={{ duration: 0.15 }}
             className={clsx(
               'absolute z-50 px-3 py-1.5 rounded-lg text-xs whitespace-nowrap pointer-events-none',
-              'bg-bg-elevated border border-white/10 text-gray-200 shadow-lg',
+              'bg-slate-900 border border-slate-700 text-slate-100 shadow-lg',
               positions[position],
               className
             )}

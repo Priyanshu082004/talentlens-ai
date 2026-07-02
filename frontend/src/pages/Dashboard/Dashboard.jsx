@@ -25,13 +25,27 @@ import styles from './Dashboard.module.css';
  */
 function StatCard({ label, value, icon: Icon, color }) {
   return (
-    <GlassCard>
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
-        style={{ background: `${color}15`, border: `1px solid ${color}25` }}>
-        <Icon size={18} style={{ color }} />
+    <GlassCard className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+      <div
+        className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl"
+        style={{
+          backgroundColor: `${color}12`,
+          border: `1px solid ${color}20`,
+        }}
+      >
+        <Icon
+          size={20}
+          style={{ color }}
+        />
       </div>
-      <p className="text-3xl font-bold font-mono text-white mb-1">{value}</p>
-      <p className="text-sm text-gray-500">{label}</p>
+
+      <p className="text-4xl font-bold font-mono tracking-tight text-slate-900">
+        {value}
+      </p>
+
+      <p className="mt-2 text-sm font-medium text-slate-500">
+        {label}
+      </p>
     </GlassCard>
   );
 }
@@ -65,15 +79,15 @@ export default function Dashboard() {
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
-      className={`${styles.dashboard} space-y-8 max-w-[1500px] mx-auto`}
+      className={`${styles.dashboard} max-w-7xl mx-auto space-y-10 px-2`}
     >
       {/* Header */}
       <motion.div variants={staggerItem} className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="font-display text-3xl font-bold text-white mb-1">
+          <h1 className="font-display text-4xl font-bold tracking-tight text-slate-900">
             {greeting()}, {firstName} 👋
           </h1>
-          <p className="text-gray-500 text-sm">Here's your interview analysis overview.</p>
+          <p className="mt-2 text-base text-slate-500">Here's your interview analysis overview.</p>
         </div>
         {analysisResult && (
           <Button variant="ghost" size="sm" onClick={() => dispatch(clearAnalysis())}>
@@ -83,7 +97,7 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Stats */}
-      <motion.div variants={staggerItem} className="grid sm:grid-cols-3 gap-5">
+      <motion.div variants={staggerItem} className="grid gap-6 md:grid-cols-3">
         <StatCard
           label="Total analysis"
           value={history.length}
@@ -112,7 +126,7 @@ export default function Dashboard() {
             exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
           >
             <GlassCard>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-5">
+              <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mb-5">
                 Analyze a new resume
               </p>
               <ResumeUpload />
@@ -130,7 +144,7 @@ export default function Dashboard() {
             variants={staggerItem}
           >
             <GlassCard>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-5">
+              <p className="text-xs font-medium text-slate-400 uppercase tracking-widest mb-5">
                 Analysis progress
               </p>
               <AnalysisTimeline currentStep={currentStep} />
@@ -146,7 +160,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-400"
+            className="px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-600"
           >
             {error}
           </motion.div>
@@ -166,38 +180,30 @@ export default function Dashboard() {
       {!analysisResult && history.length > 0 && (
         <motion.div variants={staggerItem}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display font-bold text-white text-lg">Recent analysis</h2>
+            <h2 className="font-display font-bold text-slate-900 text-lg">Recent analyses</h2>
             <button
               onClick={() => navigate(ROUTES.HISTORY)}
-              className="text-xs text-primary-400 hover:text-primary-300 flex items-center gap-1"
+              className="text-xs text-primary-500 hover:text-primary-600 flex items-center gap-1 font-semibold"
             >
               View all <ArrowRight size={12} />
             </button>
           </div>
           <div className="space-y-3">
             {history.slice(0, 4).map((item) => (
-              <GlassCard
-                key={item._id}
-                padding={false}
-                className="px-5 py-4 flex items-center justify-between"
-              >
+              <GlassCard key={item._id} padding={false} className="px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center shrink-0">
-                    <FileText size={15} className="text-primary-400" />
+                  <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0">
+                    <FileText size={15} className="text-primary-500" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-white truncate">
-                      {item.title || 'Interview Report'}
-                    </p>
-                    <p className="text-xs text-gray-500">{formatDate(item.createdAt)}</p>
+                    <p className="text-sm font-semibold text-slate-800 truncate">{item.title || 'Interview Report'}</p>
+                    <p className="text-xs text-slate-400">{formatDate(item.createdAt)}</p>
                   </div>
                 </div>
                 {item.matchScore != null && (
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className={`text-lg font-bold font-mono ${scoreTextClass(item.matchScore)}`}>
-                      {item.matchScore}
-                    </span>
-                    <span className="text-xs text-gray-600">/ 100</span>
+                    <span className={`text-lg font-bold font-mono ${scoreTextClass(item.matchScore)}`}>{item.matchScore}</span>
+                    <span className="text-xs text-slate-400">/ 100</span>
                   </div>
                 )}
               </GlassCard>
@@ -209,11 +215,9 @@ export default function Dashboard() {
       {/* Empty state */}
       {!history.length && !isLoadingHistory && !analysisResult && (
         <motion.div variants={staggerItem}>
-          <GlassCard className="text-center py-10">
-            <FileText size={32} className="text-gray-700 mx-auto mb-3" />
-            <p className="text-gray-500 text-sm">
-              No analysis yet. Fill in the form above and upload your resume to get started.
-            </p>
+         <GlassCard className="text-center py-10">
+            <FileText size={32} className="text-slate-200 mx-auto mb-3" />
+            <p className="text-slate-500 text-sm">No analyses yet. Fill in the form above and upload your resume.</p>
           </GlassCard>
         </motion.div>
       )}

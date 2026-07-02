@@ -36,11 +36,24 @@ export default {
           500: "#06B6D4",
         },
 
-       bg: {
-            base: "#050505",        
-            surface: "#0F0F10",     
-            elevated: "#171717",   
-           },
+        slate: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#64748B",
+          600: "#475569",
+          700: "#334155",
+          800: "#1E293B",
+          900: "#0F172A",
+        },
+
+        bg: {
+          base: "#F8FAFC",
+          surface: "#FFFFFF",
+          elevated: "#F1F5F9",
+        },
       },
 
       backgroundImage: {
@@ -59,9 +72,11 @@ export default {
       },
 
       boxShadow: {
-        glow:"0 0 20px rgba(99,102,241,0.12)",
-       "glow-lg":"0 0 50px rgba(99,102,241,0.18)",
-        glass: "0 8px 32px rgba(0,0,0,0.4)",
+        soft: "0 10px 30px rgba(15, 23, 42, 0.08)",
+        card: "0 12px 30px rgba(15, 23, 42, 0.08)",
+        glow: "0 0 24px rgba(99, 102, 241, 0.12)",
+        "glow-lg": "0 0 50px rgba(99, 102, 241, 0.18)",
+        glass: "0 8px 32px rgba(0,0,0,0.08)",
       },
 
       animation: {
@@ -130,11 +145,11 @@ export default {
           primary: "#6366F1",
           secondary: "#7C3AED",
           accent: "#06B6D4",
-          neutral: "#0F172A",
+          neutral: "#475569",
 
-          "base-100": "#050816",
-          "base-200": "#0F172A",
-          "base-300": "#111827",
+          "base-100": "#F8FAFC",
+          "base-200": "#E2E8F0",
+          "base-300": "#FFFFFF",
 
           info: "#06B6D4",
           success: "#10B981",

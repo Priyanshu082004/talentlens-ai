@@ -1,9 +1,9 @@
 :root {
- /* Backgrounds */
---bg-base:     #050505;
---bg-surface:  #0F0F10;
---bg-elevated: #171717;
---bg-overlay:  rgba(5, 5, 5, 0.88);
+  /* Backgrounds */
+  --bg-base:     #F8FAFC;
+  --bg-surface:  #FFFFFF;
+  --bg-elevated: #F1F5F9;
+  --bg-overlay:  rgba(15, 23, 42, 0.04);
 
   /* Primary */
   --primary-400: #818CF8;
@@ -20,10 +20,11 @@
   --accent-500: #06B6D4;
 
   /* Text */
- --text-primary:   #F5F5F5;
- --text-secondary: #CFCFCF;
- --text-muted:     #8A8A8A;
- --text-disabled:  #4A4A4A;
+  --text-primary:   #0F172A;
+  --text-secondary: #334155;
+  --text-muted:     #64748B;
+  --text-disabled:  #94A3B8;
+
   /* Semantic */
   --success: #10B981;
   --warning: #F59E0B;
@@ -32,13 +33,13 @@
 
   /* Gradients */
   --gradient-card:
-linear-gradient(
-145deg,
-rgba(255,255,255,0.035),
-rgba(255,255,255,0.015)
-);
-  --glass-border: rgba(99, 102, 241, 0.15);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    linear-gradient(
+      145deg,
+      rgba(15, 23, 42, 0.04),
+      rgba(255, 255, 255, 0.8)
+    );
+  --glass-border: rgba(148, 163, 184, 0.2);
+  --glass-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 
   /* Typography */
   --font-display: 'Syne', sans-serif;
@@ -53,10 +54,10 @@ rgba(255,255,255,0.015)
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm:   0 1px 3px rgba(0,0,0,0.4);
-  --shadow-md:   0 4px 16px rgba(0,0,0,0.5);
-  --shadow-lg:   0 8px 32px rgba(0,0,0,0.6);
-  --shadow-glow: 0 0 40px rgba(99,102,241,0.2);
+  --shadow-sm:   0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-md:   0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg:   0 18px 50px rgba(15, 23, 42, 0.12);
+  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.12);
 
   /* Transitions */
   --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
@@ -64,4 +65,4 @@ rgba(255,255,255,0.015)
   --duration-fast: 150ms;
   --duration-base: 250ms;
   --duration-slow: 400ms;
-}
+} 

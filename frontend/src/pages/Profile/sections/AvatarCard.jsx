@@ -56,10 +56,10 @@ export default function AvatarCard() {
           avatar={preview || user?.avatar}
           fullName={user?.fullName}
         />
-        <h2 className="mt-6 text-xl font-bold text-white">
+        <h2 className="mt-6 text-xl font-bold text-slate-900">
           {user?.fullName}
         </h2>
-        <p className="text-gray-500 mt-1">
+        <p className="text-slate-500 mt-1">
           @{user?.username}
         </p>
         <input
@@ -96,7 +96,7 @@ export default function AvatarCard() {
         </div>
         {uploading && (
           <div className="mt-5 w-full">
-            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
               <div
                 className="h-full bg-primary-500 transition-all"
                 style={{
@@ -104,20 +104,20 @@ export default function AvatarCard() {
                 }}
               />
             </div>
-            <p className="mt-2 text-xs text-gray-500 text-center">
+            <p className="mt-2 text-xs text-slate-500 text-center">
               Uploading... {progress}%
             </p>
           </div>
         )}
-        <div className=" mt-8 rounded-xl  border border-primary-500/20 bg-primary-500/5p-4w-full  " >
+        <div className="mt-8 rounded-xl border border-primary-500/20 bg-primary-500/5 p-4 w-full">
           <div className="flex gap-3">
             <Camera className="text-primary-400 shrink-0 mt-1" size={18} />
-            <p className="text-sm leading-7 text-gray-400">
+            <p className="text-sm leading-7 text-slate-600">
               Supported formats:
               JPG, PNG and WEBP.
               <br />
               Maximum upload size:
-              <strong className="text-white">         
+              <strong className="text-slate-900">         
                 {" "}5 MB
               </strong>
             </p>

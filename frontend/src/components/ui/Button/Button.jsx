@@ -3,9 +3,9 @@ import clsx from 'clsx';
 
 const variants = {
   primary:   'bg-primary-500 hover:bg-primary-600 text-white shadow-glow hover:shadow-glow-lg border-transparent',
-  secondary: 'bg-transparent border border-primary-500 text-primary-400 hover:bg-primary-500/10',
-  ghost:     'bg-transparent border border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20',
-  danger:    'bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20',
+  secondary: 'bg-slate-100 border border-slate-200 text-slate-900 hover:bg-slate-200',
+  ghost:     'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100',
+  danger:    'bg-red-50 border border-red-200 text-red-600 hover:bg-red-100',
 };
 
 const sizes = {

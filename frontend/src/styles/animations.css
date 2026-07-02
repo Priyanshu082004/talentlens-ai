@@ -9,11 +9,6 @@
   50%       { transform: translateY(-14px); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.2); }
-  50%       { box-shadow: 0 0 50px rgba(99,102,241,0.5); }
-}
-
 @keyframes shimmer {
   from { background-position: -200% center; }
   to   { background-position:  200% center; }
@@ -43,11 +38,6 @@
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-@keyframes orbPulse {
-  0%, 100% { opacity: 0.12; transform: translate(-50%,-50%) scale(1); }
-  50%       { opacity: 0.20; transform: translate(-50%,-50%) scale(1.08); }
 }
 
 /* ── Utility classes ── */

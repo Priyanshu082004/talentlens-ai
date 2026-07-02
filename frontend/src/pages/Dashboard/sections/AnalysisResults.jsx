@@ -32,25 +32,21 @@ function QAAccordion({ questions = [], label, icon: Icon, accentColor = 'text-pr
 
   return (
     <GlassCard>
-      <h3 className={`font-display font-semibold text-white text-sm mb-4 flex items-center gap-2`}>
+      <h3 className={`font-display font-semibold text-slate-900 text-sm mb-4 flex items-center gap-2`}>
         <Icon size={14} className={accentColor} />
         {label}
-        <span className="ml-auto text-xs text-gray-600 font-normal font-mono">{questions.length} questions</span>
+        <span className="ml-auto text-xs text-slate-500 font-normal font-mono">{questions.length} questions</span>
       </h3>
-
-      {!questions.length ? (
-        <p className="text-xs text-gray-600">No questions generated.</p>
-      ) : (
-        <div className="space-y-2">
-          {questions.map((item, i) => (
-            <div key={i} className="border border-white/5 rounded-xl overflow-hidden">
+      <div className="space-y-2">
+        {questions.map((item, i) => (
+          <div key={i} className="border border-slate-200 rounded-xl overflow-hidden">
               <button
                 onClick={() => setOpenIdx(openIdx === i ? null : i)}
-                className="w-full flex items-start justify-between px-4 py-3 text-left hover:bg-white/3 transition-colors gap-3"
+                className="w-full flex items-start justify-between px-4 py-3 text-left hover:bg-slate-50 transition-colors gap-3"
               >
                 <div className="flex items-start gap-2.5">
                   <span className={`text-xs font-mono ${accentColor} mt-0.5 shrink-0`}>Q{i + 1}</span>
-                  <span className="text-sm text-gray-300 leading-snug">
+                  <span className="text-sm text-slate-700 leading-snug">
                     {item.question}
                   </span>
                 </div>
@@ -59,7 +55,7 @@ function QAAccordion({ questions = [], label, icon: Icon, accentColor = 'text-pr
                   transition={{ duration: 0.2 }}
                   className="shrink-0 mt-0.5"
                 >
-                  <ChevronDown size={15} className="text-gray-600" />
+                  <ChevronDown size={15} className="text-slate-400" />
                 </motion.div>
               </button>
 
@@ -71,14 +67,14 @@ function QAAccordion({ questions = [], label, icon: Icon, accentColor = 'text-pr
                   exit="exit"
                   className="overflow-hidden"
                 >
-                  <div className="px-4 pb-4 border-t border-white/5">
+                  <div className="px-4 pb-4 border-t border-slate-200">
                     {/* Intention chip */}
                     {item.intention && (
                       <div className="pt-3 pb-2">
-                        <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                        <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
                           Interviewer's intent
                         </span>
-                        <p className="text-xs text-gray-400 mt-1 leading-relaxed italic">
+                        <p className="text-xs text-slate-500 mt-1 leading-relaxed italic">
                           {item.intention}
                         </p>
                       </div>
@@ -87,7 +83,7 @@ function QAAccordion({ questions = [], label, icon: Icon, accentColor = 'text-pr
                     {item.answer && (
                       <div className="pt-2">
                         <span className={`text-xs font-medium ${accentColor}`}>How to answer</span>
-                        <p className="text-sm text-gray-300 leading-relaxed mt-1">{item.answer}</p>
+                        <p className="text-sm text-slate-700 leading-relaxed mt-1">{item.answer}</p>
                       </div>
                     )}
                   </div>
@@ -96,7 +92,6 @@ function QAAccordion({ questions = [], label, icon: Icon, accentColor = 'text-pr
             </div>
           ))}
         </div>
-      )}
     </GlassCard>
   );
 }
@@ -157,8 +152,8 @@ export default function AnalysisResults({ result }) {
         <div>
           {title && (
             <>
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Analysis for</p>
-              <h2 className="font-display text-xl font-bold text-white">{title}</h2>
+              <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">Analysis for</p>
+              <h2 className="font-display text-xl font-bold text-slate-900">{title}</h2>
             </>
           )}
         </div>
@@ -169,7 +164,7 @@ export default function AnalysisResults({ result }) {
       <motion.div variants={staggerItem}>
         <GlassCard className="flex flex-col items-center py-8">
           <ATSScoreCard score={matchScore} label="Match Score" />
-          <p className="text-xs text-gray-500 mt-3 text-center">
+          <p className="text-xs text-slate-500 mt-3 text-center">
             How well your resume matches the target job description
           </p>
         </GlassCard>
@@ -207,3 +202,11 @@ export default function AnalysisResults({ result }) {
     </motion.div>
   );
 }
+
+
+
+
+
+
+
+//  check this for ui changes at the end 

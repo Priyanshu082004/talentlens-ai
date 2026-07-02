@@ -50,7 +50,7 @@ export default function CircularProgress({
         <svg width={size} height={size} className="-rotate-90">
           <circle
             cx={size / 2} cy={size / 2} r={radius}
-            fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={strokeWidth}
+            fill="none" stroke="rgba(15,23,42,0.08)" strokeWidth={strokeWidth}
           />
           <circle
             ref={pathRef}
@@ -59,7 +59,7 @@ export default function CircularProgress({
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={circumference - targetDash}
-            style={{ filter: `drop-shadow(0 0 8px ${ringColor}80)` }}
+            style={{ filter: `drop-shadow(0 0 12px ${ringColor}40)` }}
           />
         </svg>
 
@@ -71,10 +71,10 @@ export default function CircularProgress({
           >
             {animate ? 0 : score}
           </span>
-          <span className="text-xs text-gray-500 mt-0.5">/100</span>
+          <span className="text-xs text-slate-500 mt-0.5">/100</span>
         </div>
       </div>
-      <span className="text-sm font-medium text-gray-400">{label}</span>
+      <span className="text-sm font-medium text-slate-600">{label}</span>
     </div>
   );
 }

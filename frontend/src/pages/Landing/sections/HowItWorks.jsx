@@ -13,15 +13,15 @@ export default function HowItWorks() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="how-it-works" className="section-py relative overflow-hidden">
+    <section id="how-it-works" className="section-py relative overflow-hidden bg-slate-50">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%)' }} />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="text-center mb-20">
           <span className="text-xs font-semibold text-primary-400 uppercase tracking-widest mb-4 block">How it works</span>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-4">From upload to insights in 30 seconds</h2>
-          <p className="text-gray-400 text-lg max-w-xl mx-auto">Three steps. No setup. No signup friction. Just answers.</p>
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-slate-900 mb-4">From upload to insights in 30 seconds</h2>
+          <p className="text-slate-600 text-lg max-w-xl mx-auto">Three steps. No setup. No signup friction. Just answers.</p>
         </motion.div>
 
         <div ref={ref} className="grid md:grid-cols-3 gap-8 relative">
@@ -41,8 +41,8 @@ export default function HowItWorks() {
                 </div>
               </div>
 
-              <h3 className="font-display font-bold text-white text-lg mb-3">{title}</h3>
-              <p className="text-sm text-gray-400 leading-relaxed max-w-xs">{desc}</p>
+              <h3 className="font-display font-bold text-slate-900 text-lg mb-3">{title}</h3>
+              <p className="text-sm text-slate-600 leading-relaxed max-w-xs">{desc}</p>
             </motion.div>
           ))}
         </div>

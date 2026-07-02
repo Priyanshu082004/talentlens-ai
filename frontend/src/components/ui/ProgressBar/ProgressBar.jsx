@@ -23,12 +23,12 @@ export default function ProgressBar({
   return (
     <div className={clsx('flex flex-col gap-1.5', className)}>
       {(label || showValue) && (
-        <div className="flex items-center justify-between text-xs text-gray-400">
+        <div className="flex items-center justify-between text-xs text-slate-500">
           {label && <span>{label}</span>}
-          {showValue && <span className="font-mono text-gray-300">{pct}%</span>}
+          {showValue && <span className="font-mono text-slate-600">{pct}%</span>}
         </div>
       )}
-      <div className="w-full rounded-full overflow-hidden bg-white/5" style={{ height }}>
+      <div className="w-full rounded-full overflow-hidden bg-slate-100" style={{ height }}>
         <motion.div
           className={clsx('h-full rounded-full bg-gradient-to-r', colorMap[color])}
           initial={{ width: 0 }}

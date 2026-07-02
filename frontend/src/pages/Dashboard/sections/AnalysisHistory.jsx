@@ -50,8 +50,8 @@ const handleOpen = async (id) => {
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-full max-w-7xl mx-auto space-y-8">
       <motion.div variants={staggerItem}>
-        <h1 className="font-display text-2xl font-bold text-white mb-1">Analysis History</h1>
-        <p className="text-sm text-gray-500">All your previous interview report analysis.</p>
+        <h1 className="font-display text-2xl font-bold text-slate-900 mb-1">Analysis History</h1>
+        <p className="text-sm text-slate-500">All your previous interview report analysis.</p>
       </motion.div>
 
       <motion.div variants={staggerItem} className="flex gap-3 flex-wrap">
@@ -65,7 +65,7 @@ const handleOpen = async (id) => {
         </div>
         <button
           onClick={() => setSortDir((d) => d === 'desc' ? 'asc' : 'desc')}
-          className="flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 text-sm text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all"
+          className="flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all"
         >
           {sortDir === 'desc' ? <SortDesc size={15} /> : <SortAsc size={15} />}
           {sortDir === 'desc' ? 'Newest first' : 'Oldest first'}
@@ -81,8 +81,8 @@ const handleOpen = async (id) => {
       ) : filtered.length === 0 ? (
         <motion.div variants={staggerItem}>
           <GlassCard className="text-center py-12">
-            <FileText size={32} className="text-gray-700 mx-auto mb-3" />
-            <p className="text-gray-500 text-sm">
+            <FileText size={32} className="text-slate-700 mx-auto mb-3" />
+            <p className="text-slate-500 text-sm">
               {query ? 'No reports match your search.' : 'No analysis yet. Upload your first resume to get started.'}
             </p>
           </GlassCard>
@@ -106,10 +106,10 @@ const handleOpen = async (id) => {
                       <FileText size={16} className="text-primary-400" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white truncate">
+                      <p className="text-sm font-medium text-slate-900 truncate">
                         {item.title || 'Interview Report'}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-slate-500">
                         {formatDateTime(item.createdAt)}
                       </p>
                     </div>
@@ -117,7 +117,7 @@ const handleOpen = async (id) => {
 
                   <div className="flex items-center gap-3 shrink-0">
                     {item.matchScore != null && <ScoreBadge score={item.matchScore} />}
-                    <ChevronRight size={16} className="text-gray-600" />
+                    <ChevronRight size={16} className="text-slate-400" />
                   </div>
                 </GlassCard>
               </motion.div>
@@ -127,7 +127,7 @@ const handleOpen = async (id) => {
       )}
 
       {filtered.length > 0 && (
-        <motion.p variants={staggerItem} className="text-xs text-gray-600 text-center">
+        <motion.p variants={staggerItem} className="text-xs text-slate-500 text-center">
           {filtered.length} {filtered.length === 1 ? 'report' : 'reports'} found
         </motion.p>
       )}

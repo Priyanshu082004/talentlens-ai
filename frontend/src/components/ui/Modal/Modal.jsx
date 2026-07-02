@@ -36,7 +36,7 @@ export default function Modal({ open, onClose, title, children, footer, size = '
           animate="visible"
           exit="exit"
           onClick={onClose}
-          className="fixed inset-0 z-[200] flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-[200] flex items-center justify-center px-4 bg-slate-900/10 backdrop-blur-sm"
         >
           <motion.div
             variants={modalPanel}
@@ -48,11 +48,11 @@ export default function Modal({ open, onClose, title, children, footer, size = '
           >
             {/* Header */}
             {title && (
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
-                <h3 className="font-display font-semibold text-white text-lg">{title}</h3>
+              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+                <h3 className="font-display font-semibold text-slate-900 text-lg">{title}</h3>
                 <button
                   onClick={onClose}
-                  className="text-gray-500 hover:text-gray-200 transition-colors"
+                  className="text-slate-500 hover:text-slate-700 transition-colors"
                 >
                   <X size={18} />
                 </button>
@@ -64,7 +64,7 @@ export default function Modal({ open, onClose, title, children, footer, size = '
 
             {/* Footer */}
             {footer && (
-              <div className="px-6 py-4 border-t border-white/5 flex justify-end gap-3">
+              <div className="px-6 py-4 border-t border-slate-200 flex justify-end gap-3">
                 {footer}
               </div>
             )}

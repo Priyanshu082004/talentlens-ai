@@ -22,10 +22,10 @@ export default function Card({
       className={clsx(
         'bg-bg-surface rounded-2xl',
         'transition-all duration-200',
-        bordered && 'border border-white/5',
+        bordered && 'border border-slate-200',
         padding && 'p-6',
         onClick &&
-          'w-full text-left cursor-pointer hover:border-white/10 hover:-translate-y-0.5',
+          'w-full text-left cursor-pointer hover:border-slate-300 hover:-translate-y-0.5',
         className
       )}
       {...props}

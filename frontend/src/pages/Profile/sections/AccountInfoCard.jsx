@@ -7,10 +7,10 @@ export default function AccountInfoCard({ user }) {
 
     <GlassCard>
       <div className="mb-8">
-     <h2 className="font-display text-xl font-bold text-white">
+     <h2 className="font-display text-xl font-bold text-slate-900">
           Account Information
         </h2>
-        <p className="text-sm text-gray-500 mt-2">These details are managed by your account and are currently read-only  </p>
+        <p className="text-sm text-slate-500 mt-2">These details are managed by your account and are currently read-only  </p>
       </div>
 
       <div className="space-y-6">
@@ -40,7 +40,7 @@ export default function AccountInfoCard({ user }) {
           p-4
         "
       >
-        <p className="text-sm leading-7 text-gray-400">
+        <p className="text-sm leading-7 text-slate-600">
           Need to change your account details
           <br />
           Account editing will be available in a future update.
@@ -58,16 +58,16 @@ function InfoRow({
 }) {
 
   return (
-    <div className="flex items-center justify-between border-b border-white/5 pb-5">
+    <div className="flex items-center justify-between border-b border-slate-200 pb-5">
       <div className="flex items-center gap-3">
         <div className="text-primary-400">
           {icon}
         </div>
-     <span className="text-gray-400">
+     <span className="text-slate-600">
           {label}
         </span>
       </div>
-      <span className="font-medium text-white">
+      <span className="font-medium text-slate-900">
         {value}
       </span>
     </div>

@@ -53,7 +53,7 @@ export const staggerItem = {
 /* Card hover lift */
 export const cardHover = {
   rest:  { scale: 1,    boxShadow: '0 0 0px rgba(99,102,241,0)' },
-  hover: { scale: 1.02, boxShadow: '0 0 32px rgba(99,102,241,0.25)',
+  hover: { scale: 1.02, boxShadow: '0 18px 40px rgba(15,23,42,0.08)',
            transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] } },
 };
 
@@ -78,11 +78,11 @@ export const sidebarVariants = {
 
 /* Upload zone states */
 export const uploadZoneVariants = {
-  idle:     { borderColor: 'rgba(99,102,241,0.2)',  backgroundColor: 'rgba(15,23,42,0)',    scale: 1 },
-  hover:    { borderColor: 'rgba(99,102,241,0.5)',  backgroundColor: 'rgba(99,102,241,0.03)', scale: 1 },
-  dragging: { borderColor: '#6366F1',               backgroundColor: 'rgba(99,102,241,0.07)', scale: 1.01 },
-  success:  { borderColor: '#10B981',               backgroundColor: 'rgba(16,185,129,0.05)', scale: 1 },
-  error:    { borderColor: '#EF4444',               backgroundColor: 'rgba(239,68,68,0.05)',  scale: 1 },
+  idle:     { borderColor: 'rgba(148,163,184,0.35)', backgroundColor: 'rgba(255,255,255,0.85)', scale: 1 },
+  hover:    { borderColor: '#6366F1',               backgroundColor: 'rgba(99,102,241,0.08)', scale: 1 },
+  dragging: { borderColor: '#6366F1',               backgroundColor: 'rgba(99,102,241,0.12)', scale: 1.01 },
+  success:  { borderColor: '#10B981',               backgroundColor: 'rgba(16,185,129,0.12)', scale: 1 },
+  error:    { borderColor: '#EF4444',               backgroundColor: 'rgba(239,68,68,0.12)', scale: 1 },
 };
 
 /* Progress bar fill */

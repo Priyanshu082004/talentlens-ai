@@ -86,14 +86,14 @@ export default function Signup() {
             <div className="w-9 h-9 rounded-xl bg-gradient-hero flex items-center justify-center">
               <Zap size={18} className="text-white" />
             </div>
-            <span className="font-display font-bold text-white text-xl">TalentLensAI</span>
+            <span className="font-display font-bold text-slate-900 text-xl">TalentLensAI</span>
           </Link>
         </motion.div>
 
         <motion.div variants={staggerItem} className="glass rounded-2xl p-8">
           <div className="mb-7">
-            <h1 className="font-display text-2xl font-bold text-white mb-1">Create your account</h1>
-            <p className="text-sm text-gray-500">Start analyzing your resume for free</p>
+            <h1 className="font-display text-2xl font-bold text-slate-900 mb-1">Create your account</h1>
+            <p className="text-sm text-slate-500">Start analyzing your resume for free</p>
           </div>
 
           {error && (
@@ -136,11 +136,11 @@ export default function Signup() {
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="flex flex-col gap-1.5">
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <div key={i} className={clsx('h-1 flex-1 rounded-full transition-colors duration-300', i <= strength ? STRENGTH_COLORS[strength] : 'bg-white/10')} />
+                      <div key={i} className={clsx('h-1 flex-1 rounded-full transition-colors duration-300', i <= strength ? STRENGTH_COLORS[strength] : 'bg-slate-100')} />
                     ))}
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Strength: <span className="text-gray-300">{STRENGTH_LABELS[strength]}</span>
+                  <p className="text-xs text-slate-500">
+                    Strength: <span className="text-slate-600">{STRENGTH_LABELS[strength]}</span>
                   </p>
                 </motion.div>
               )}
@@ -160,7 +160,7 @@ export default function Signup() {
                   onChange={(e) => { setAgreed(e.target.checked); if (errors.agreed) setErrors((p) => ({ ...p, agreed: '' })); }}
                   className="mt-0.5 w-4 h-4 rounded accent-primary-500 shrink-0"
                 />
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-slate-500">
                   I agree to the <a href="#" className="text-primary-400 hover:underline">Terms of Service</a>{' '}
                   and <a href="#" className="text-primary-400 hover:underline">Privacy Policy</a>
                 </span>
@@ -173,12 +173,11 @@ export default function Signup() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an account?{' '}
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Already have an account?{' '}</p>
             <Link to={ROUTES.LOGIN} className="text-primary-400 hover:text-primary-300 transition-colors font-medium">
               Sign in
             </Link>
-          </p>
         </motion.div>
       </motion.div>
     </div>

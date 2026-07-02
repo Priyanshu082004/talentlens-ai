@@ -40,7 +40,7 @@ export default function DangerZone() {
                     <p
                         className="
                             text-sm
-                            text-gray-400
+                            text-slate-500
                             mt-2
                             leading-7
                         "
@@ -53,7 +53,7 @@ export default function DangerZone() {
                             mt-5
                             space-y-2
                             text-sm
-                            text-gray-500
+                            text-slate-500
                         "
                     >
                         <li>• Profile Information</li>

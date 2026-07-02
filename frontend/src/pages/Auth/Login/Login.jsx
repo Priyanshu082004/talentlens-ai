@@ -48,14 +48,14 @@ export default function Login() {
             <div className="w-9 h-9 rounded-xl bg-gradient-hero flex items-center justify-center">
               <Zap size={18} className="text-white" />
             </div>
-            <span className="font-display font-bold text-white text-xl">TalentLensAI</span>
+            <span className="font-display font-bold text-slate-900 text-xl">TalentLensAI</span>
           </Link>
         </motion.div>
 
         <motion.div variants={staggerItem} className="glass rounded-2xl p-8">
           <div className="mb-7">
-            <h1 className="font-display text-2xl font-bold text-white mb-1">Welcome back</h1>
-            <p className="text-sm text-gray-500">Sign in to your AI workspace</p>
+            <h1 className="font-display text-2xl font-bold text-slate-900 mb-1">Welcome back</h1>
+            <p className="text-sm text-slate-500">Sign in to your AI workspace</p>
           </div>
 
           {error && (
@@ -77,7 +77,7 @@ export default function Login() {
             <div className="flex items-center justify-between mt-1">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 rounded accent-primary-500" />
-                <span className="text-xs text-gray-400">Remember me</span>
+                <span className="text-xs text-slate-500">Remember me</span>
               </label>
               <a href="#" className="text-xs text-primary-400 hover:text-primary-300 transition-colors">Forgot password?</a>
             </div>
@@ -86,20 +86,20 @@ export default function Login() {
           </form>
 
           <div className="flex items-center gap-3 my-6">
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-xs text-gray-600">or continue with</span>
-            <div className="flex-1 h-px bg-white/10" />
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-xs text-slate-500">or continue with</span>
+            <div className="flex-1 h-px bg-slate-200" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             {['Google', 'GitHub'].map((p) => (
-              <button key={p} type="button" className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 text-sm text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all">
+              <button key={p} type="button" className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
                 {p}
               </button>
             ))}
           </div>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p className="text-center text-sm text-slate-500 mt-6">
             No account?{' '}
             <Link to={ROUTES.SIGNUP} className="text-primary-400 hover:text-primary-300 transition-colors font-medium">
               Sign up free
