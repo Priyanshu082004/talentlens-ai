@@ -5,7 +5,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 import { retryGemini } from "../utils/retry.js";
 
 
@@ -426,38 +427,39 @@ FINAL CHECK BEFORE RETURNING
 }
 // Convert HTML to PDF
 async function generatePdfFromHtml(htmlContent) {
-    try {
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox"
-            ]
-        });
-        const page = await browser.newPage();
-        await page.setContent(htmlContent, {
-            waitUntil: "networkidle0"
-        });
-        const pdfBuffer = await page.pdf({
-            format: "A4",
-            printBackground: true,
-            margin: {
-                top: "20mm",
-                bottom: "20mm",
-                left: "15mm",
-                right: "15mm"
-            }
-        });
+  try {
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
 
-        await browser.close();
-        return pdfBuffer;
-    }
-    catch (error) {
-        console.error("PDF Generation Error");
-        console.error(error);
-        throw new Error("Failed to generate resume PDF.");
-    }
+    const page = await browser.newPage();
 
+    await page.setContent(htmlContent, {
+      waitUntil: "networkidle0",
+    });
+
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      printBackground: true,
+      margin: {
+        top: "20mm",
+        bottom: "20mm",
+        left: "15mm",
+        right: "15mm",
+      },
+    });
+
+    await browser.close();
+
+    return pdfBuffer;
+  } catch (error) {
+    console.error("PDF Generation Error");
+    console.error(error);
+    throw new Error("Failed to generate resume PDF.");
+  }
 }
 
 
