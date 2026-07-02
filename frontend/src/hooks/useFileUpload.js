@@ -33,3 +33,9 @@ export const useFileUpload = () => {
 
   return { dragActive, fileError, fileName, onDrop, onDragOver, onDragLeave, onInputChange };
 };
+
+
+// This code defines a custom React hook called `useFileUpload` that manages the state and behavior for uploading and analyzing resume files. 
+// It uses Redux to dispatch actions related to file upload and analysis, and it maintains local state for drag-and-drop interactions, 
+// file validation errors, and the name of the uploaded file. The hook provides event handlers for drag-and-drop events and file input changes,
+//  allowing components to easily integrate file upload functionality.

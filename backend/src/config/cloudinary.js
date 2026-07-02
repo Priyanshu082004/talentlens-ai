@@ -8,3 +8,8 @@ cloudinary.config({
 });
 
 export default cloudinary;
+
+
+
+
+//  congfiguration for cloudinary to upload images and files to cloudinary server.

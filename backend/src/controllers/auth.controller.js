@@ -4,6 +4,7 @@ import tokenBlacklistModel from "../models/blacklist.model.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 
+
 export const registerUserController = asyncHandler(async (req, res) => {
   const { username, email, password, fullName } = req.body;
 
@@ -57,6 +58,7 @@ export const registerUserController = asyncHandler(async (req, res) => {
     },
   });
 });
+
 
 export const loginUserController = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -132,3 +134,9 @@ export const getMeController = asyncHandler(async (req, res) => {
     user,
   });
 });
+
+
+
+
+
+//  one file for all auth controllers: register, login, logout, getMe. can add refresh token controller here too.

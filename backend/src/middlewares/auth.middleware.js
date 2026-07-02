@@ -24,3 +24,8 @@ export const authUser = asyncHandler(async (req, res, next) => {
 
   next();
 });
+
+
+//  This middleware function `authUser` is used to authenticate users based on a JWT token. 
+// It checks for the presence of a token in the request cookies, verifies if the token is blacklisted, and decodes the token to attach the user
+//  information to the request object. If any of these checks fail, it throws an appropriate error.

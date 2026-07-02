@@ -5,7 +5,7 @@ import { Mail, Lock, Eye, EyeOff, Zap } from 'lucide-react';
 import { useAuth } from '@hooks/useAuth.js';
 import Button  from '@components/ui/Button/Button.jsx';
 import Input   from '@components/ui/Input/Input.jsx';
-import OrbGlow from '@components/shared/OrbGlow/OrbGlow.jsx';
+// import OrbGlow from '@components/shared/OrbGlow/OrbGlow.jsx';
 import { staggerContainer, staggerItem } from '@animations/framerVariants.js';
 import { ROUTES } from '@constants/routes.js';
 import styles from './Login.module.css';
@@ -39,8 +39,7 @@ export default function Login() {
 
   return (
     <div className={`${styles.page} min-h-screen bg-bg-base flex items-center justify-center px-4 relative overflow-hidden`}>
-      <OrbGlow color="#6366F1" size={700} opacity={0.12} top="10%" left="50%" />
-      <OrbGlow color="#7C3AED" size={500} opacity={0.08} top="70%" left="20%" />
+     
 
       <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-full max-w-md relative z-10">
         <motion.div variants={staggerItem} className="flex items-center justify-center gap-2 mb-8">
@@ -73,14 +72,6 @@ export default function Login() {
               rightIcon={showPassword ? EyeOff : Eye} onRightIconClick={() => setShowPassword((p) => !p)}
               error={errors.password} required
             />
-
-            <div className="flex items-center justify-between mt-1">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded accent-primary-500" />
-                <span className="text-xs text-slate-500">Remember me</span>
-              </label>
-              <a href="#" className="text-xs text-primary-400 hover:text-primary-300 transition-colors">Forgot password?</a>
-            </div>
 
             <Button type="submit" loading={isLoading} fullWidth size="lg" className="mt-2">Sign in</Button>
           </form>

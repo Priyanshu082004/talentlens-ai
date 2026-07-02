@@ -24,3 +24,10 @@ export const useGSAP = (callback, deps = []) => {
 
   return ref;
 };
+
+
+// This code defines a custom React hook called `useGSAP` that allows you to run GSAP animations within a React component.
+//  It takes a callback function and an optional dependency array as arguments. The hook creates a reference to a DOM element 
+// and runs the provided callback function within a GSAP context, ensuring that all animations are scoped to the referenced element.
+//  When the component unmounts, the hook automatically reverts all animations to prevent memory leaks or unintended side effects.
+//  This pattern is useful for integrating GSAP animations into React function components while maintaining proper cleanup.

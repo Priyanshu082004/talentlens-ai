@@ -56,3 +56,9 @@ export default function Button({
     </motion.button>
   );
 }
+
+
+// This code defines a reusable Button component in React using the Framer Motion library for animations and the clsx
+//  library for conditional class names. The Button component supports different variants (primary, secondary, ghost, danger),
+//  sizes (sm, md, lg), and states (loading, disabled). It also allows for full-width buttons and custom class names. 
+// The button displays a loading spinner when the loading prop is true.

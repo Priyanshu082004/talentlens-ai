@@ -24,3 +24,10 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+
+// This code sets up an Axios instance for making HTTP requests to a backend API. 
+// It configures the base URL, request timeout, and enables sending cookies with cross-origin requests. Additionally,
+//  it includes a response interceptor that checks for 401 Unauthorized responses and redirects the user to the login page
+//  if they are not already on an authentication page. This ensures that users are prompted to log in again if
+//  their session has expired or their token has been invalidated.

@@ -112,3 +112,9 @@ const authSlice = createSlice({
 
 export const { clearError, clearAuth ,updateUser } = authSlice.actions;
 export default authSlice.reducer;
+
+
+// This code defines a Redux slice for managing authentication state in a React application using Redux Toolkit. 
+// It includes asynchronous actions for logging in, registering, fetching the current user, and logging out. T
+// he slice maintains the state of the user, loading status, error messages, and authentication status. 
+// It also provides reducers to clear errors and reset authentication state.

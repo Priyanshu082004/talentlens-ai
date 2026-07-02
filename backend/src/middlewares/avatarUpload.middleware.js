@@ -20,3 +20,8 @@ const avatarUpload = multer({
 });
 
 export default avatarUpload;
+
+
+// middleware for handling avatar uploads using multer. It sets up a memory storage for the uploaded files,
+//  limits the file size to 5MB, and filters the files to only allow image types. If a non-image file is uploaded,
+//  it throws an ApiError with a 400 status code and an appropriate message.

@@ -39,3 +39,10 @@ const profileService = {
 };
 
 export default profileService;
+
+
+// This code defines a `profileService` object that provides methods for managing user profile-related operations in a web application. 
+// It uses an Axios instance (`api`) to make HTTP requests to the backend API endpoints defined in the `API` constant. 
+// The service includes methods for retrieving the user's profile, uploading an avatar image with progress tracking, deleting the avatar,
+//  and deleting the user account. Each method returns the response data from the corresponding API call, allowing other parts of the 
+// application to interact with the user profile system easily.

@@ -39,3 +39,6 @@ export default function ProgressBar({
     </div>
   );
 }
+
+
+// This code defines a reusable ProgressBar component in React that displays a horizontal progress bar with customizable properties.

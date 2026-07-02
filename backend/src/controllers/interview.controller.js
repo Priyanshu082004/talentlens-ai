@@ -1,104 +1,3 @@
-// import { PDFParse } from "pdf-parse";
-// import {
-//   generateInterviewReport,
-//   generateResumePdf,
-// } from "../services/ai.service.js";
-// import interviewReportModel from "../models/interviewReport.model.js";
-// import { asyncHandler } from "../utils/AsyncHandler.js";
-// import { ApiError } from "../utils/ApiError.js";
-
-
-// export const generateResumePdfController = asyncHandler(async (req, res) => {
-
-//   const { interviewId } = req.params;
-
-//   const interviewReport = await interviewReportModel.findById(interviewId);
-
-//   if (!interviewReport) {
-//     throw new ApiError(404, "Interview report not found.");
-//   }
-
-//   const { resume, selfDescription, jobDescription } = interviewReport;
-
-//   const pdfBuffer = await generateResumePdf({
-//     resume,
-//     selfDescription,
-//     jobDescription,
-//   });
-
-//   res.set({
-//     "Content-Type": "application/pdf",
-//     "Content-Disposition": `attachment; filename=resume_${interviewId}.pdf`,
-//   });
-
-//   res.send(pdfBuffer);
-// });
-
-// export const getInterviewReportByIdController = asyncHandler(async (req, res) => {
-
-//   const { interviewId } = req.params;
-
-//   const interviewReport = await interviewReportModel.findOne({
-//     _id: interviewId,
-//     user: req.user.id,
-//   });
-
-//   if (!interviewReport) {
-//     throw new ApiError(404, "Interview report not found.");
-//   }
-
-//   res.status(200).json({
-//     message: "Interview report fetched successfully.",
-//     interviewReport,
-//   });
-// });
-
-// export const getAllInterviewReportsController = asyncHandler(async (req, res) => {
-
-//   const interviewReports = await interviewReportModel.find({
-//     user: req.user.id,
-//   })
-//   .sort({ createdAt: -1 })
-//   .select(
-//     "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan"
-//   );
-
-//   res.status(200).json({
-//     message: "Interview reports fetched successfully.",
-//     interviewReports,
-//   });
-// });
-
-// export const generateResumePdfController = asyncHandler(async (req, res) => {
-
-//   const { interviewReportId } = req.params;
-
-//   const interviewReport = await interviewReportModel.findById(
-//     interviewReportId
-//   );
-
-//   if (!interviewReport) {
-//     throw new ApiError(404, "Interview report not found.");
-//   }
-
-//   const { resume, selfDescription, jobDescription } = interviewReport;
-
-//   const pdfBuffer = await generateResumePdf({
-//     resume,
-//     selfDescription,
-//     jobDescription,
-//   });
-
-//   res.set({
-//     "Content-Type": "application/pdf",
-//     "Content-Disposition": `attachment; filename=resume_${interviewReportId}.pdf`,
-//   });
-
-//   res.send(pdfBuffer);
-// });
-
-
-
 
 import { PDFParse } from "pdf-parse";
 import {
@@ -308,3 +207,9 @@ export const generateResumePdfController = asyncHandler(async (req, res) => {
 
   res.send(pdfBuffer);
 });
+
+
+
+
+
+//  one file for all interview controllers: generate report, get report by ID, get all reports, generate resume PDF.can add more controllers here if needed.

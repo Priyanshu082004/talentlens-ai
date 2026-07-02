@@ -18,3 +18,7 @@ const upload = multer({
 });
 
 export default upload;
+
+
+//  middleware for handling pdf uploads using multer.
+// previous one was  for phots this one is for pdfs. 

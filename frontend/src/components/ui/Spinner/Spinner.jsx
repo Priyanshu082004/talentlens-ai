@@ -11,3 +11,9 @@ export default function Spinner({ size = 20, className = '', color = 'currentCol
     </svg>
   );
 }
+
+
+// This code defines a reusable Spinner component in React that renders a spinning SVG loader. The component 
+// accepts three props: size (defaulting to 20), className (defaulting to an empty string), and color (defaulting to 'currentColor').
+//  The spinner consists of a circular path and a filled path, creating a visual spinning effect.
+//  The size and color of the spinner can be customized through the props.

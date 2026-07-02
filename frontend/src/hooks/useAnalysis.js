@@ -18,3 +18,8 @@ export const useAnalysis = ({ autoFetchHistory = false } = {}) => {
 
   return { ...resume, refreshHistory, loadReport, resetAnalysis };
 };
+// This code defines a custom React hook called `useAnalysis` that interacts with a Redux store to manage the state related to resume analysis.
+//  It provides functionality to fetch history, load specific reports by ID, and clear analysis data. The hook uses `useEffect` to
+//  optionally fetch history when the component mounts, and `useCallback` to memoize the dispatch functions for performance optimization. 
+// The returned object includes the current state of the resume analysis along with the functions to refresh history, load reports, and 
+// reset analysis.

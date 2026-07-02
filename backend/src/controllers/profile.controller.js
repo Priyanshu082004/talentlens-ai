@@ -95,3 +95,8 @@ export const getProfileController = asyncHandler(async (req, res) => {
     user,
   });
 });
+
+
+
+
+//  one file for all profile controllers: upload avatar, delete avatar, delete account, get profile. can add more controllers here if needed.

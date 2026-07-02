@@ -5,7 +5,6 @@ import { User, AtSign, Mail, Lock, Eye, EyeOff, Zap } from 'lucide-react';
 import { useAuth } from '@hooks/useAuth.js';
 import Button  from '@components/ui/Button/Button.jsx';
 import Input   from '@components/ui/Input/Input.jsx';
-import OrbGlow from '@components/shared/OrbGlow/OrbGlow.jsx';
 import { staggerContainer, staggerItem } from '@animations/framerVariants.js';
 import { ROUTES } from '@constants/routes.js';
 import styles from './Signup.module.css';
@@ -77,8 +76,7 @@ export default function Signup() {
 
   return (
     <div className={`${styles.page} min-h-screen bg-bg-base flex items-center justify-center px-4 py-12 relative overflow-hidden`}>
-      <OrbGlow color="#7C3AED" size={700} opacity={0.12} top="10%" left="60%" />
-      <OrbGlow color="#6366F1" size={400} opacity={0.08} top="80%" left="10%" />
+
 
       <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-full max-w-md relative z-10">
         <motion.div variants={staggerItem} className="flex items-center justify-center gap-2 mb-8">

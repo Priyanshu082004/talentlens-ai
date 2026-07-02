@@ -122,3 +122,9 @@ export const {
 } = resumeSlice.actions;
 
 export default resumeSlice.reducer;
+
+// This code defines a Redux slice for managing the state related to resume analysis in a React application using Redux Toolkit.
+//  It includes asynchronous actions for uploading and analyzing resumes, fetching history, and fetching specific reports by ID.
+//  The slice maintains the state of the uploaded file, upload progress, analysis result, history, loading status, error messages,
+//  current step in the analysis process, self-description, and job description. It also provides reducers to update the state based
+//  on user actions and API responses.

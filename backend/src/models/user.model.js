@@ -77,3 +77,8 @@ userSchema.methods.generateRefreshToken = function () {
 const User = mongoose.model("User", userSchema);
 
 export { User };
+
+
+
+
+// This file defines a Mongoose schema and model for the User entity in a MongoDB database.

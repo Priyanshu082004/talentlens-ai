@@ -74,3 +74,8 @@ export default function Input({
     </div>
   );
 }
+
+
+// This code defines a reusable Input component in React that supports various features such as labels, icons, error messages, 
+// and focus states. It uses the clsx library for conditional class names and manages focus state with the useState hook. 
+// The component is designed to be flexible and customizable, allowing for different input types, placeholders, and additional props.

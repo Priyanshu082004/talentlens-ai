@@ -42,3 +42,9 @@ export default function Tooltip({ children, content, position = 'top', className
     </div>
   );
 }
+
+
+// This code defines a reusable Tooltip component in React that displays a tooltip when the user hovers over the child element.
+//  It uses the Framer Motion library for smooth animations and the clsx library for conditional class names.
+//  The tooltip can be positioned at the top, bottom, left, or right of the child element, and it supports custom content and
+//  additional styling through props.

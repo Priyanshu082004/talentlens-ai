@@ -18,3 +18,6 @@ const tokenBlacklistModel = mongoose.model(
 );
 
 export default tokenBlacklistModel;
+
+
+// This file defines a Mongoose schema and model for blacklisting tokens.

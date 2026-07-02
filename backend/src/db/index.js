@@ -14,3 +14,7 @@ const connectDB = async () => {
 
 
 export default connectDB;
+
+// database connection file for connecting to MongoDB using mongoose. 
+// It uses the MONGODB_URL from environment variables to establish the connection. If the connection is successful, it logs the host of the connected database. 
+// If it fails, it logs the error and exits the process with a failure code.

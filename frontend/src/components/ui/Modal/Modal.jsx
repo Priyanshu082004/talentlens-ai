@@ -75,3 +75,7 @@ export default function Modal({ open, onClose, title, children, footer, size = '
     document.body
   );
 }
+// This code defines a reusable Modal component in React that uses the Framer Motion library for animations and the createPortal function
+//  to render the modal outside of the main DOM hierarchy. The Modal component supports various features such as customizable sizes, 
+// titles, footers, and smooth opening/closing animations. It also prevents background scrolling when the modal is open and allows for 
+// closing the modal by clicking outside of it or on a close button.

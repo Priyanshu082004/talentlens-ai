@@ -68,3 +68,11 @@ const resumeService = {
 };
 
 export default resumeService;
+
+
+
+// This code defines a `resumeService` object that provides methods for handling resume-related operations in a web application.
+// It uses an Axios instance (`api`) to make HTTP requests to the backend API endpoints defined in the `API` constant. 
+// The service includes methods for uploading and analyzing resumes, fetching the user's interview history, fetching a specific interview report by ID, 
+// and downloading the AI-generated resume PDF. Each method returns the response data from the corresponding API call, allowing other parts of the 
+// application to interact with the resume analysis system easily.  

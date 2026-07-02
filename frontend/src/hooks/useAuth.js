@@ -47,3 +47,9 @@ export const useAuth = () => {
 
   return { ...auth, login, signup, logout, dismissError };
 };
+
+
+// This code defines a custom React hook called `useAuth` that provides authentication-related functionality for a web application. 
+// It interacts with a Redux store to manage the authentication state and provides methods for logging in, signing up, logging out,
+//  and dismissing error messages. The hook uses `react-hot-toast` for displaying success and error notifications and `react-router-dom`
+//  for navigation after authentication actions. The returned object includes the current authentication state along with the defined methods.

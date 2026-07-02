@@ -12,3 +12,8 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: { ignoredActions: ['resume/analyze/pending'] } }),
 });
+
+// This code sets up a Redux store for a React application using Redux Toolkit.
+//  It imports three reducers: `authReducer`, `resumeReducer`, and `uiReducer`, which manage the state for authentication, resume analysis, and
+//  user interface respectively. The store is configured with these reducers and includes middleware that ignores serializable checka
+//   for the 'resume/analyze/pending' action, allowing for non-serializable data to be handled in that specific case.

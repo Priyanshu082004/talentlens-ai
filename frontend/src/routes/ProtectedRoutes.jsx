@@ -27,3 +27,5 @@ export default function ProtectedRoutes() {
   // Not authenticated
   return <Navigate to={ROUTES.LOGIN} replace />;
 }
+
+

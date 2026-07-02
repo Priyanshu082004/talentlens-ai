@@ -23,7 +23,7 @@ export default function CTASection() {
           </p>
           <Button
             onClick={() => navigate(ROUTES.SIGNUP)}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 font-semibold text-base rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-500 text-white font-semibold text-base rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
           >
             Analyze my resume free <ArrowRight size={16} />
           </Button>

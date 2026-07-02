@@ -58,3 +58,7 @@ export default function AppRoutes() {
     </Suspense>
   );
 }
+
+// This code defines the main routing structure for a React application using React Router. 
+// It includes public and protected routes, lazy loading for performance optimization, and a fallback loading screen. 
+// The `NotFound` component handles undefined routes, providing a user-friendly 404 page.

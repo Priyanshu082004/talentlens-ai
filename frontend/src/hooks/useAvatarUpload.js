@@ -59,3 +59,11 @@ export default function useAvatarUpload() {
         removePreview,
     };
 }
+
+
+// This code defines a custom React hook called `useAvatarUpload` 
+// that provides functionality for uploading and managing user avatar images. It includes state management 
+// for the image preview, upload progress, and uploading status. The hook validates the selected image file 
+// to ensure it is an image and within the size limit, provides a method to select and preview the image, and
+//  handles the upload process with progress tracking. It also includes error handling and displays success or 
+// error messages using a Toast component. The hook returns relevant state and functions for use in components.
