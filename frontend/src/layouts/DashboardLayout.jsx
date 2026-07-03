@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import Sidebar from '@components/layout/Sidebar/Sidebar.jsx';
+import Sidebar from '@components/layout/Sidebar/SideBar.jsx';
 import { pageTransition } from '@animations/framerVariants.js';
 
 export default function DashboardLayout() {
