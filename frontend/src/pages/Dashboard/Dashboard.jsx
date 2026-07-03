@@ -7,7 +7,7 @@ import { fetchHistory, clearAnalysis } from '@redux/slices/resumeSlice.js';
 import ResumeUpload     from './sections/ResumeUpload.jsx';
 import AnalysisTimeline from './sections/AnalysisTimeline.jsx';
 import AnalysisResults  from './sections/AnalysisResults.jsx';
-import GlassCard from '@components/ui/GlassCard.jsx';
+import GlassCard from '@components/ui/GlassCard/GlassCard.jsx';
 import Button    from '@components/ui/Button/Button.jsx';
 import { staggerContainer, staggerItem } from '@animations/framerVariants.js';
 import { ROUTES } from '@constants/routes.js';
