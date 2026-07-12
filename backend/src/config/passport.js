@@ -22,13 +22,13 @@ export const setOAuthCookiesAndRedirect = (res, user) => {
   res.cookie("refreshToken", refreshToken, cookieOptions);
 
   res.redirect(`${FRONTEND_URL}/dashboard`);
-};
+ };
 
 const generateUsername = async (baseName) => {
   const slug = baseName.toLowerCase().replace(/[^a-z0-9]/g, "_").slice(0, 20);
   let username = slug;
   let counter  = 0;
-  while (await userModel.findOne({ username })) {
+  while (await User.findOne({ username })) {
     counter++;
     username = `${slug}_${counter}`;
   }
@@ -50,14 +50,14 @@ passport.use(
 
         if (!email) return done(new Error("No email from Google"), null);
 
-        let user = await userModel.findOne({ email });
+        let user = await User.findOne({ email });
         if (user) {
           if (avatar && !user.avatar) { user.avatar = avatar; await user.save(); }
           return done(null, user);
         }
 
         const username = await generateUsername(fullName);
-        user = await userModel.create({
+        user = await User.create({
           fullName, username, email, avatar, authProvider: "google",
         });
         return done(null, user);
