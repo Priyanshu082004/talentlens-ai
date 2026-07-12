@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
     },
    avatar: {
     type: String,
@@ -31,15 +30,19 @@ const userSchema = new mongoose.Schema(
     type: String,
     default: "",
   },
-
+  authProvider: {
+  type: String,
+  enum: ["local", "google", "github"],
+  default: "local",
   },
+ },
   { timestamps: true }
 );
 
 
 
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return ;
+  if (!this.password || !this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
 });
 
