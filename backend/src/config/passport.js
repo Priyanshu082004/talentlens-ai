@@ -87,14 +87,14 @@ passport.use(
 
         if (!email) return done(new Error("No email from GitHub — make your GitHub email public"), null);
 
-        let user = await userModel.findOne({ email });
+        let user = await User.findOne({ email });
         if (user) {
           if (avatar && !user.avatar) { user.avatar = avatar; await user.save(); }
           return done(null, user);
         }
 
         const username = await generateUsername(profile.username || fullName);
-        user = await userModel.create({
+        user = await User.create({
           fullName, username, email, avatar, authProvider: "github",
         });
         return done(null, user);
