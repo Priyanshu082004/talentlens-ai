@@ -7,6 +7,9 @@ export const uploadAndAnalyze = createAsyncThunk(
   'resume/analyze',
   async ({ file, selfDescription, jobDescription }, { dispatch, rejectWithValue }) => {
     try {
+      if(!selfDescription.trim() || !jobDescription.trim()){
+        return rejectWithValue("Please fill Self Description and Job Description")
+      }
       return await resumeService.analyzeResume(
         file,
         selfDescription,
